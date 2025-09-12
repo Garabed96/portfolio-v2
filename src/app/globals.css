@@ -24,7 +24,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-raleway);
-  --font-mono: var(--font-jetbrains-mono);
   --font-display: var(--font-raleway);
   --font-body: var(--font-raleway);
 
@@ -55,17 +54,11 @@
   line-height: 1.6;
 }
 
-.font-mono {
-  font-family: var(--font-jetbrains-mono);
-  font-weight: 400;
-  font-size: 0.875em;
-}
-
 /* Code and technical text */
 code,
 pre,
 .code {
-  font-family: var(--font-jetbrains-mono);
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
   font-weight: 400;
 }
 
@@ -125,7 +118,10 @@ body {
 }
 
 @keyframes subtlePulse {
-  0%,
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 0.4;
@@ -199,4 +195,26 @@ body {
     rgba(255, 82, 82, 0.05),
     rgba(255, 107, 107, 0.05)
   );
+}
+
+.animate-pulse-and-spin {
+  animation: pulse-and-spin 6s linear infinite;
+}
+
+@keyframes pulse-and-spin {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+    rotate: 0deg;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+    rotate: 360deg;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.2;
+    rotate: 180deg;
+  }
 }

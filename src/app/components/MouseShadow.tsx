@@ -124,7 +124,7 @@ export default function MouseShadow() {
   return (
     <div
       ref={shadowRef}
-      className="mouse-shadow"
+      className="mouse-shadow animate-pulse-and-spin"
       style={{
         position: 'fixed',
         pointerEvents: 'none',

@@ -134,9 +134,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${raleway.variable} antialiased`}>
-        {children}
-      </body>
+      <body className={`${raleway.variable} antialiased`}>{children}</body>
     </html>
   );
 }
