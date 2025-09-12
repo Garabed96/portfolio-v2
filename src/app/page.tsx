@@ -4,25 +4,29 @@ export default function Home() {
   return (
     <main>
       <MouseShadow />
-      <section className="relative z-10 max-w-[100%] bg-[url('/profile.jpg')] bg-cover bg-[center_top_35%] px-4 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24">
+      <section
+        className="relative z-10 max-w-[100%] bg-[url('/profile.jpg')] bg-cover bg-[center_top_35%] px-4 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24"
+        aria-label="Hero section with personal introduction"
+      >
         <div className="flex w-full items-center justify-center">
           <div className="absolute top-0 z-10 h-full w-full backdrop-brightness-50" />
           <div className="relative z-10 h-full w-full p-5 md:p-12 lg:p-32">
             <div className="container mx-auto max-w-6xl space-y-5">
               <h1 className="text-4xl leading-none md:text-5xl xl:text-6xl">Mathieu Bertin</h1>
               <div>
-                <h4 className="text-primary-400 mb-8 text-2xl font-medium md:text-3xl lg:max-w-none lg:text-4xl xl:text-5xl">
+                <h2 className="text-primary-400 mb-8 text-2xl font-medium md:text-3xl lg:max-w-none lg:text-4xl xl:text-5xl">
                   Full Stack Developer
-                </h4>
+                </h2>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
-                  with 10+ years of development experience and 0 professional design experience.
+                  with 10+ years of development experience and exactly 0 professional design
+                  experience.
                 </p>
               </div>
               <ol className="mt-5 space-y-2 lg:flex lg:space-y-0 lg:space-x-5 lg:text-lg">
                 <li>
                   <a
                     rel="noopener"
-                    className="text-alabaster-200 hover:text-primary-400 flex cursor-pointer items-center space-x-1"
+                    className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
                     href="https://github.com/burtonium/"
                   >
                     <svg
@@ -43,7 +47,7 @@ export default function Home() {
                 <li>
                   <a
                     rel="noopener"
-                    className="text-alabaster-200 hover:text-primary-400 flex cursor-pointer items-center space-x-1"
+                    className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
                     href="https://www.linkedin.com/in/mathieu-bertin"
                   >
                     <svg
@@ -61,7 +65,7 @@ export default function Home() {
                     <span>LinkedIn</span>
                   </a>
                 </li>
-                <li className="text-alabaster-200 flex items-center space-x-1">
+                <li className="flex items-center space-x-1">
                   <form method="get" action="Resume.docx">
                     <button
                       className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
@@ -94,7 +98,7 @@ export default function Home() {
                     </button>
                   </form>
                 </li>
-                <li className="text-alabaster-200 flex items-center space-x-1">
+                <li className="flex items-center space-x-1">
                   <form method="get" action="Resume.pdf">
                     <button
                       className="hover:text-primary-400 group flex cursor-pointer items-center space-x-1"
@@ -158,6 +162,7 @@ export default function Home() {
                       width="22"
                       height="22"
                       src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+                      alt="TypeScript logo"
                     />
                     <span>Typescript</span>
                   </li>
@@ -202,6 +207,7 @@ export default function Home() {
                         width="22"
                         height="22"
                         src="https://www.postgresql.org/media/img/about/press/elephant.png"
+                        alt="PostgreSQL logo"
                       />
                     </a>
                     <span>Postgresql</span>
@@ -458,7 +464,10 @@ export default function Home() {
           </li>
         </ol>
       </section>
-      <section className="section-bg-purple px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24">
+      <section
+        className="section-bg-purple px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
+        aria-label="Work experience section"
+      >
         <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
         <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
           <div className="frosted-glass-dark space-y-4 p-5">
@@ -481,6 +490,7 @@ export default function Home() {
                     width="22"
                     height="22"
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+                    alt="TypeScript logo"
                   />
                   <span>Typescript</span>
                 </li>
@@ -620,6 +630,7 @@ export default function Home() {
                       width="22"
                       height="22"
                       src="https://www.postgresql.org/media/img/about/press/elephant.png"
+                      alt="PostgreSQL logo"
                     />
                   </a>
                   <span>Postgresql</span>
@@ -771,6 +782,7 @@ export default function Home() {
                     width="22"
                     height="22"
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+                    alt="TypeScript logo"
                   />
                   <span>Typescript</span>
                 </li>
@@ -861,6 +873,7 @@ export default function Home() {
                       width="22"
                       height="22"
                       src="https://www.postgresql.org/media/img/about/press/elephant.png"
+                      alt="PostgreSQL logo"
                     />
                   </a>
                   <span>Postgresql</span>
@@ -1013,7 +1026,10 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="section-bg-dark px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24">
+      <section
+        className="section-bg-dark px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
+        aria-label="Personal projects and experiments section"
+      >
         <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Personal Experiments</h2>
         <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
           <div className="frosted-glass-dark space-y-4 p-5">
@@ -1057,6 +1073,7 @@ export default function Home() {
                     width="22"
                     height="22"
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+                    alt="TypeScript logo"
                   />
                   <span>Typescript</span>
                 </li>
@@ -1205,6 +1222,7 @@ export default function Home() {
                     width="22"
                     height="22"
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+                    alt="TypeScript logo"
                   />
                   <span>Typescript</span>
                 </li>
