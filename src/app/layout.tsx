@@ -115,8 +115,7 @@ export default function RootLayout({
               jobTitle: 'Full Stack Developer',
               description:
                 'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications',
-              url: 'https://mathieubertin.dev',
-              image: 'https://mathieubertin.dev/profile.jpg',
+              url: 'https://portfolio.nephelo.io',
               sameAs: [
                 'https://github.com/burtonium',
                 'https://www.linkedin.com/in/mathieu-bertin'
