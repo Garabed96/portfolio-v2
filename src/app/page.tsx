@@ -15,7 +15,7 @@ export default function Home() {
                   Full Stack Developer
                 </h4>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
-                  with 10+ years of development experience and 0 professional design experience
+                  with 10+ years of development experience and 0 professional design experience.
                 </p>
               </div>
               <ol className="mt-5 space-y-2 lg:flex lg:space-y-0 lg:space-x-5 lg:text-lg">
