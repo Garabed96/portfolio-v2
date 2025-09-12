@@ -459,7 +459,7 @@ export default function Home() {
         </ol>
       </section>
       <section className="section-bg-purple px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24">
-        <h2 className="mb-10 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
+        <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
         <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
           <div className="frosted-glass-dark space-y-4 p-5">
             <div>
@@ -1014,7 +1014,7 @@ export default function Home() {
         </div>
       </section>
       <section className="section-bg-dark px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24">
-        <h2 className="mb-10 text-3xl md:text-4xl lg:text-5xl">Personal Experiments</h2>
+        <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Personal Experiments</h2>
         <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
           <div className="frosted-glass-dark space-y-4 p-5">
             <div>
