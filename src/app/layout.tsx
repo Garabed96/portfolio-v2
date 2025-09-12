@@ -1,18 +1,11 @@
 import type { Metadata } from 'next';
-import { Raleway, JetBrains_Mono } from 'next/font/google';
+import { Raleway } from 'next/font/google';
 import './globals.css';
 
 const raleway = Raleway({
   variable: '--font-raleway',
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap'
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: '--font-jetbrains-mono',
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
   display: 'swap'
 });
 
@@ -141,7 +134,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${raleway.variable} ${jetbrainsMono.variable} antialiased`}>
+      <body className={`${raleway.variable} antialiased`}>
         {children}
       </body>
     </html>
