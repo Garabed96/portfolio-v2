@@ -253,7 +253,7 @@ export default function Home() {
       <MouseShadow />
       <section
         id="introduction"
-        className="relative z-10 flex flex-col items-center justify-center px-4 pt-24 pb-16 md:px-8 md:pt-28 md:pb-20 lg:px-12 lg:pt-32 lg:pb-24"
+        className="main-section relative z-10 flex flex-col items-center justify-center px-4 pt-24 pb-16 md:px-8 md:pt-28 md:pb-20 lg:px-12 lg:pt-32 lg:pb-24"
         aria-label="Hero section with personal introduction"
       >
         <div className="flex w-full items-center justify-center">
@@ -364,7 +364,7 @@ export default function Home() {
       </section>
       <section
         id="skills"
-        className="flex flex-col items-center justify-center space-y-10 px-4 py-16 text-center md:px-8 md:py-20 lg:px-12 lg:py-24"
+        className="main-section flex flex-col items-center justify-center space-y-10 px-4 py-16 text-center md:px-8 md:py-20 lg:px-12 lg:py-24"
       >
         <div className="flex flex-col gap-1 md:gap-2">
           <h2 className="text-3xl md:text-4xl lg:text-5xl">I make web3/blockchain</h2>
@@ -402,7 +402,7 @@ export default function Home() {
           </li>
         </ol>
       </section>
-      <section className="flex flex-col items-center justify-center" id="projects">
+      <section className="main-section flex flex-col items-center justify-center" id="projects">
         <h2 className="mb-12 px-3 text-center text-3xl md:text-4xl lg:text-5xl">
           I've made &nbsp;
           {projects.map((project) => (
@@ -593,7 +593,7 @@ export default function Home() {
       </section>
       <section
         id="experience"
-        className="section-bg-purple px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
+        className="main-section px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
         aria-label="Work experience section"
       >
         <h2 className="mb-12 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
