@@ -1,3 +1,6 @@
+'use client';
+
+import { useReducer } from 'react';
 import MouseShadow from './components/MouseShadow';
 import {
   GithubIcon,
@@ -14,18 +17,175 @@ import {
   TailwindcssIcon,
   DatabaseIcon,
   SmartContractIcon,
-  BackendSystemsIcon,
-  ViteIcon,
-  AwsIcon,
-  VercelIcon
+  BackendSystemsIcon
 } from './components/icons';
+import pointsAppScreen1 from './assets/points-app-screen-1.png';
+import pointsAppScreen2 from './assets/points-app-screen-2.png';
+import webWalletScreen1 from './assets/web-wallet-screen-1.png';
+import webWalletScreen2 from './assets/web-wallet-screen-2.png';
+import webWalletScreen3 from './assets/web-wallet-screen-3.png';
+import nodeOperatorDashboardScreen1 from './assets/node-operator-dashboard-screen-1.png';
+import nodeOperatorDashboardScreen2 from './assets/node-operator-dashboard-screen-2.png';
+import nodeOperatorDashboardScreen3 from './assets/node-operator-dashboard-screen-3.png';
+import webMessengerScreen1 from './assets/web-messenger-screen-1.png';
+import webMessengerScreen2 from './assets/web-messenger-screen-2.png';
+import webMessengerScreen3 from './assets/web-messenger-screen-3.png';
+
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react';
+import { cn } from '@/utils';
+
+const projects = [
+  {
+    name: 'token dashboards',
+    repo: 'https://github.com/Burtonium/token-dashboard',
+    images: []
+  },
+  {
+    name: 'points applications',
+    url: 'https://quest.talisman.xyz/',
+    images: [pointsAppScreen1, pointsAppScreen2]
+  },
+  {
+    name: 'web wallets',
+    repo: 'https://github.com/xxfoundation/wallet.xx.network',
+    url: 'https://wallet.xx.network/',
+    images: [webWalletScreen1, webWalletScreen2, webWalletScreen3]
+  },
+  {
+    name: 'web messengers',
+    repo: 'https://github.com/xxfoundation/haven',
+    url: 'https://haven.xx.network/',
+    images: [webMessengerScreen1, webMessengerScreen2, webMessengerScreen3]
+  },
+  {
+    name: 'node operator dashboards',
+    repo: 'https://github.com/Burtonium/node-operator-dashboard',
+    url: 'https://dashboard.xx.network/',
+    images: [
+      nodeOperatorDashboardScreen1,
+      nodeOperatorDashboardScreen2,
+      nodeOperatorDashboardScreen3
+    ]
+  }
+] as const;
+
+// Action types
+type Action =
+  | { type: 'nextProject' }
+  | { type: 'previousProject' }
+  | { type: 'nextImage' }
+  | { type: 'previousImage' };
+
+// State type
+interface State {
+  selectedProject: (typeof projects)[number];
+  selectedImage: number;
+  hasNextImage: boolean;
+  hasPreviousImage: boolean;
+}
+
+// Initial state
+const initialState: State = {
+  selectedProject: projects[0],
+  selectedImage: 0,
+  hasNextImage: projects[0].images.length > 1,
+  hasPreviousImage: false
+};
+
+function portfolioReducer(state: State, action: Action): State {
+  switch (action.type) {
+    case 'nextProject': {
+      const currentIndex = projects.findIndex(
+        (project) => project.name === state.selectedProject.name
+      );
+      const nextIndex = currentIndex + 1 === projects.length ? 0 : currentIndex + 1;
+      const nextProject = projects[nextIndex];
+      return {
+        ...state,
+        selectedProject: nextProject,
+        selectedImage: 0,
+        hasNextImage: nextProject.images.length > 1,
+        hasPreviousImage: false
+      };
+    }
+    case 'previousProject': {
+      const currentIndex = projects.findIndex(
+        (project) => project.name === state.selectedProject.name
+      );
+      const prevIndex = currentIndex - 1 < 0 ? projects.length - 1 : currentIndex - 1;
+      const prevProject = projects[prevIndex];
+      return {
+        ...state,
+        selectedProject: prevProject,
+        selectedImage: 0,
+        hasNextImage: prevProject.images.length > 1,
+        hasPreviousImage: false
+      };
+    }
+    case 'nextImage': {
+      const newImageIndex = state.selectedImage + 1;
+      const hasNext = newImageIndex < state.selectedProject.images.length - 1;
+      const hasPrevious = newImageIndex > 0;
+
+      // Don't allow going beyond the last image
+      if (newImageIndex >= state.selectedProject.images.length) {
+        return state;
+      }
+
+      return {
+        ...state,
+        selectedImage: newImageIndex,
+        hasNextImage: hasNext,
+        hasPreviousImage: hasPrevious
+      };
+    }
+    case 'previousImage': {
+      const newImageIndex = state.selectedImage - 1;
+      const hasNext = newImageIndex < state.selectedProject.images.length - 1;
+      const hasPrevious = newImageIndex > 0;
+
+      // Don't allow going below the first image
+      if (newImageIndex < 0) {
+        return state;
+      }
+
+      return {
+        ...state,
+        selectedImage: newImageIndex,
+        hasNextImage: hasNext,
+        hasPreviousImage: hasPrevious
+      };
+    }
+    default:
+      return state;
+  }
+}
 
 export default function Home() {
+  const [state, dispatch] = useReducer(portfolioReducer, initialState);
+
+  const handleNextProject = () => {
+    dispatch({ type: 'nextProject' });
+  };
+
+  const handlePreviousProject = () => {
+    dispatch({ type: 'previousProject' });
+  };
+
+  const handleNextImage = () => {
+    dispatch({ type: 'nextImage' });
+  };
+
+  const handlePreviousImage = () => {
+    dispatch({ type: 'previousImage' });
+  };
+
   return (
-    <main>
+    <main className="snap-container">
       <MouseShadow />
       <section
-        className="relative z-10 max-w-[100%] bg-[url('/profile.jpg')] bg-cover bg-[center_top_35%] px-4 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24"
+        id="introduction"
+        className="relative z-10 flex flex-col items-center justify-center px-4 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24"
         aria-label="Hero section with personal introduction"
       >
         <div className="flex w-full items-center justify-center">
@@ -34,7 +194,7 @@ export default function Home() {
             <div className="container mx-auto max-w-6xl space-y-5">
               <h1 className="text-4xl leading-none md:text-5xl xl:text-6xl">Mathieu Bertin</h1>
               <div>
-                <h2 className="text-primary-400 mb-8 text-2xl font-medium md:text-3xl lg:max-w-none lg:text-4xl xl:text-5xl">
+                <h2 className="text-primary-400 mb-8 text-4xl leading-none md:text-5xl xl:text-6xl">
                   Full Stack Developer
                 </h2>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
@@ -134,10 +294,13 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="flex min-h-[22rem] flex-col items-center justify-center space-y-10 px-4 py-16 text-center md:px-8 md:py-20 lg:px-12 lg:py-24">
+      <section
+        id="skills"
+        className="flex flex-col items-center justify-center space-y-10 px-4 py-16 text-center md:px-8 md:py-20 lg:px-12 lg:py-24"
+      >
         <div className="flex flex-col gap-1 md:gap-2">
           <h2 className="text-3xl md:text-4xl lg:text-5xl">I make web3/blockchain</h2>
-          <h2 className="text-primary-400 text-4xl md:text-5xl lg:text-6xl">web applications</h2>
+          <h2 className="text-primary-400 text-5xl md:text-6xl lg:text-7xl">web applications</h2>
           <h2 className="text-3xl md:text-4xl lg:text-5xl">entirely from scratch.</h2>
         </div>
         <p className="text-base md:text-lg lg:text-xl">
@@ -171,20 +334,82 @@ export default function Home() {
           </li>
         </ol>
       </section>
+      <section className="flex flex-col items-center justify-center" id="projects">
+        <h2 className="mb-12 text-3xl md:text-4xl lg:text-5xl">
+          I've made &nbsp;
+          {projects.map((project) => (
+            <span
+              key={project.name}
+              className={
+                project.name === state.selectedProject.name ? 'text-primary-400' : 'hidden'
+              }
+            >
+              {project.name}
+            </span>
+          ))}
+        </h2>
+
+        <div className="flex">
+          <button className="text-primary-400 cursor-pointer" onClick={handlePreviousProject}>
+            <ChevronFirst className="size-16" />
+          </button>
+          <button
+            className={cn(
+              'cursor-pointer',
+              state.hasPreviousImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
+            )}
+            onClick={handlePreviousImage}
+            disabled={!state.hasPreviousImage}
+          >
+            <ChevronLeft className="size-16" />
+          </button>
+          <div className="grow">
+            {(() => {
+              const currentProject = projects.find(
+                (project) => project.name === state.selectedProject.name
+              );
+              if (currentProject && 'images' in currentProject && currentProject.images) {
+                return (
+                  <img
+                    src={currentProject.images[state.selectedImage]?.src}
+                    alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
+                    className="max-w-5xl"
+                  />
+                );
+              }
+              return <div className="aspect-square">No image available</div>;
+            })()}
+          </div>
+          <button
+            className={cn(
+              'cursor-pointer',
+              state.hasNextImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
+            )}
+            onClick={handleNextImage}
+            disabled={!state.hasNextImage}
+          >
+            <ChevronRight className="size-16" />
+          </button>
+          <button className="text-primary-400 cursor-pointer" onClick={handleNextProject}>
+            <ChevronLast className="size-16" />
+          </button>
+        </div>
+      </section>
       <section
+        id="experience"
         className="section-bg-purple px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
         aria-label="Work experience section"
       >
-        <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
+        <h2 className="mb-12 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
         <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
           <div className="frosted-glass-dark space-y-4 p-5">
             <div>
               <h3 className="mb-2 text-2xl leading-tight md:text-3xl lg:text-4xl">
-                Senior Full Stack React/Web3 Developer
+                Senior Full Stack Web3 Developer
               </h3>
               <p>
-                <span className="font-bold text-white">Balthazar DAO · Full-time</span>&nbsp;
-                <span className="mb-4 text-gray-300">[May 2024 - Present]</span>
+                <span className="font-bold text-white">APACX · Remote</span>&nbsp;
+                <span className="mb-4 text-gray-300">[June 2025 – Current]</span>
               </p>
             </div>
 
@@ -983,367 +1208,25 @@ export default function Home() {
               </ol>
             </div>
             <div>
-              <h4 className="text-2xl">Responsibilities</h4>
+              <h4 className="text-2xl">Key Achievements</h4>
               <ol className="list-disc pt-2 pl-5">
                 <li>
-                  Designed a website integrated with Contentful CMS in Nuxt.js (Vue.js), enabling
-                  the marketing team to maintain consistent branding while posting promotional
-                  content.
+                  Integrated Xave's Balancer V2 based FX Pools to the platform allowing our users to
+                  swap from PHT to USDT/USDC/XSGD with minimal slippage.
                 </li>
                 <li>
-                  Engineered a dashboard using Nuxt.js (Vue.js), Express, and PostgreSQL to display
-                  performance metrics based on a database of approximately 200 million rounds.
+                  Combined all of the repos to a single mono-repo with Turbo which enabled to share
+                  a lot of components and configuration, cutting down on a lot of duplication.
                 </li>
                 <li>
-                  Provided 150+ node operators with essential support and comprehensive performance
-                  insights:{' '}
-                  <a href="https://dashboard.xx.network/">https://dashboard.xx.network/</a>
+                  Opted for Dune.com instead of Subgraph which led to finishing our analytics and
+                  transparency page in 2 weeks when the latter was already on track to taking a
+                  month+.
                 </li>
                 <li>
-                  Developed software allowing 300+ end-users to interact with the product, enabling
-                  them to utilize the company's financial services:{' '}
-                  <a href="https://wallet.xx.network/">https://wallet.xx.network/</a>
+                  Immediately pushed for linting and formatting with prettier before commit with
+                  Husky leading to cleaner more maintainable code.
                 </li>
-                <li>
-                  Created a messenger application using Typescript/React and in-house library XXDK,
-                  expanding access to private messaging and group chats for 500+ users:{' '}
-                  <a href="https://github.com/xxfoundation/elixxir-speakeasy-web/tree/dev">
-                    https://github.com/xxfoundation/elixxir-speakeasy-web/tree/dev
-                  </a>
-                </li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        className="section-bg-dark px-4 py-16 text-center text-white md:px-8 md:py-20 lg:px-12 lg:py-24"
-        aria-label="Personal projects and experiments section"
-      >
-        <h2 className="mb-16 text-3xl md:text-4xl lg:text-5xl">Personal Experiments</h2>
-        <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
-          <div className="frosted-glass-dark space-y-4 p-5">
-            <div>
-              <h3 className="mb-4 text-2xl leading-tight md:text-3xl lg:text-4xl">
-                Ethereum Wallet From Scratch
-              </h3>
-              <p>
-                Self imposed challenge where I built a web-based Ethereum wallet project utilizing
-                raw legacy transactions, network selection, secure key management (bip39), efficient
-                data fetching <strong>without the use external web3 libraries</strong>.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-base md:text-lg">Urls</h4>
-              <ul>
-                <li>
-                  Website:{' '}
-                  <a href="https://ethereum-web-wallet-from-scratch.vercel.app/">
-                    https://ethereum-web-wallet-from-scratch.vercel.app/
-                  </a>
-                </li>
-                <li>
-                  Github:{' '}
-                  <a
-                    target="_blank"
-                    rel="noopener"
-                    href="https://github.com/Burtonium/ethereum-web-wallet-from-scratch"
-                  >
-                    https://github.com/Burtonium/ethereum-web-wallet-from-scratch
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-0 text-base md:text-lg">Tech stack:</h4>
-              <ol className="mt-0 flex flex-wrap text-white">
-                <li className="m-2 flex items-center space-x-1">
-                  <img
-                    className="inline"
-                    width="22"
-                    height="22"
-                    src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
-                    alt="TypeScript logo"
-                  />
-                  <span>Typescript</span>
-                </li>
-                <li className="flex items-center space-x-1">
-                  <svg
-                    className="inline h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="-11.5 -10.23174 23 20.46348"
-                  >
-                    <title>React Logo</title>
-                    <circle cx="0" cy="0" r="2.05" fill="#61dafb" />
-                    <g stroke="#61dafb" strokeWidth="1" fill="none">
-                      <ellipse rx="11" ry="4.2" />
-                      <ellipse rx="11" ry="4.2" transform="rotate(60)" />
-                      <ellipse rx="11" ry="4.2" transform="rotate(120)" />
-                    </g>
-                  </svg>
-                  <span>React</span>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg viewBox="0 0 248 31" className="h-4 w-auto">
-                    <title>Tailwindcss</title>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M25.517 0C18.712 0 14.46 3.382 12.758 10.146c2.552-3.382 5.529-4.65 8.931-3.805 1.941.482 3.329 1.882 4.864 3.432 2.502 2.524 5.398 5.445 11.722 5.445 6.804 0 11.057-3.382 12.758-10.145-2.551 3.382-5.528 4.65-8.93 3.804-1.942-.482-3.33-1.882-4.865-3.431C34.736 2.92 31.841 0 25.517 0zM12.758 15.218C5.954 15.218 1.701 18.6 0 25.364c2.552-3.382 5.529-4.65 8.93-3.805 1.942.482 3.33 1.882 4.865 3.432 2.502 2.524 5.397 5.445 11.722 5.445 6.804 0 11.057-3.381 12.758-10.145-2.552 3.382-5.529 4.65-8.931 3.805-1.941-.483-3.329-1.883-4.864-3.432-2.502-2.524-5.398-5.446-11.722-5.446z"
-                      fill="#38bdf8"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M76.546 12.825h-4.453v8.567c0 2.285 1.508 2.249 4.453 2.106v3.463c-5.962.714-8.332-.928-8.332-5.569v-8.567H64.91V9.112h3.304V4.318l3.879-1.143v5.937h4.453v3.713zM93.52 9.112h3.878v17.849h-3.878v-2.57c-1.365 1.891-3.484 3.034-6.285 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.285 2.999V9.112zm-5.674 14.636c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm16.016-17.313c-1.364 0-2.477-1.142-2.477-2.463a2.475 2.475 0 012.477-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.879v17.849h-3.879zm8.368 0V.9h3.878v26.06h-3.878zm29.053-17.849h4.094l-5.638 17.849h-3.807l-3.735-12.03-3.771 12.03h-3.806l-5.639-17.849h4.094l3.484 12.315 3.771-12.315h3.699l3.734 12.315 3.52-12.315zm8.906-2.677c-1.365 0-2.478-1.142-2.478-2.463a2.475 2.475 0 012.478-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.878v17.849h-3.878zm17.812-18.313c4.022 0 6.895 2.713 6.895 7.354V26.96h-3.878V16.394c0-2.713-1.58-4.14-4.022-4.14-2.55 0-4.561 1.499-4.561 5.14v9.567h-3.879V9.112h3.879v2.285c1.185-1.856 3.124-2.749 5.566-2.749zm25.282-6.675h3.879V26.96h-3.879v-2.57c-1.364 1.892-3.483 3.034-6.284 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.284 2.999V1.973zm-5.674 21.775c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm22.553 3.677c-5.423 0-9.481-4.105-9.481-9.389 0-5.318 4.058-9.388 9.481-9.388 3.519 0 6.572 1.82 8.008 4.605l-3.34 1.928c-.79-1.678-2.549-2.749-4.704-2.749-3.16 0-5.566 2.392-5.566 5.604 0 3.213 2.406 5.605 5.566 5.605 2.155 0 3.914-1.107 4.776-2.749l3.34 1.892c-1.508 2.82-4.561 4.64-8.08 4.64zm14.472-13.387c0 3.249 9.661 1.285 9.661 7.89 0 3.57-3.125 5.497-7.003 5.497-3.591 0-6.177-1.607-7.326-4.177l3.34-1.927c.574 1.606 2.011 2.57 3.986 2.57 1.724 0 3.052-.571 3.052-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.909-5.462 6.572-5.462 2.945 0 5.387 1.357 6.644 3.713l-3.268 1.82c-.647-1.392-1.904-2.035-3.376-2.035-1.401 0-2.622.607-2.622 1.892zm16.556 0c0 3.249 9.66 1.285 9.66 7.89 0 3.57-3.124 5.497-7.003 5.497-3.591 0-6.176-1.607-7.326-4.177l3.34-1.927c.575 1.606 2.011 2.57 3.986 2.57 1.724 0 3.053-.571 3.053-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.908-5.462 6.572-5.462 2.944 0 5.386 1.357 6.643 3.713l-3.268 1.82c-.646-1.392-1.903-2.035-3.375-2.035-1.401 0-2.622.607-2.622 1.892z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="h-5 w-20"
-                    aria-label="Vercel logotype"
-                    height="64"
-                    role="img"
-                    viewBox="0 0 283 64"
-                    width="283"
-                  >
-                    <title>Vercel</title>
-                    <path
-                      d="M141.68 16.25c-11.04 0-19 7.2-19 18s8.96 18 20 18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 2.21-5.09 3.5-8.54 3.5-4.79 0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 0-10.79-7.96-17.99-19-17.99zm-9.46 14.5c1.25-3.99 4.67-6.5 9.45-6.5 4.79 0 8.21 2.51 9.45 6.5h-18.9zm117.14-14.5c-11.04 0-19 7.2-19 18s8.96 18 20 18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 2.21-5.09 3.5-8.54 3.5-4.79 0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 0-10.79-7.96-17.99-19-17.99zm-9.45 14.5c1.25-3.99 4.67-6.5 9.45-6.5 4.79 0 8.21 2.51 9.45 6.5h-18.9zm-39.03 3.5c0 6 3.92 10 10 10 4.12 0 7.21-1.87 8.8-4.92l7.68 4.43c-3.18 5.3-9.14 8.49-16.48 8.49-11.05 0-19-7.2-19-18s7.96-18 19-18c7.34 0 13.29 3.19 16.48 8.49l-7.68 4.43c-1.59-3.05-4.68-4.92-8.8-4.92-6.07 0-10 4-10 10zm82.48-29v46h-9v-46h9zM37.59.25l36.95 64H.64l36.95-64zm92.38 5l-27.71 48-27.71-48h10.39l17.32 30 17.32-30h10.39zm58.91 12v9.69c-1-.29-2.06-.49-3.2-.49-5.81 0-10 4-10 10v14.8h-9v-34h9v9.2c0-5.08 5.91-9.2 13.2-9.2z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="iconify iconify--logos h-6 w-6"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    aria-hidden="true"
-                    role="img"
-                    width="31.88"
-                    height="32"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 256 257"
-                  >
-                    <defs>
-                      <linearGradient
-                        id="IconifyId1813088fe1fbc01fb466"
-                        x1="-.828%"
-                        x2="57.636%"
-                        y1="7.652%"
-                        y2="78.411%"
-                      >
-                        <stop offset="0%" stopColor="#41D1FF"></stop>
-                        <stop offset="100%" stopColor="#BD34FE"></stop>
-                      </linearGradient>
-                      <linearGradient
-                        id="IconifyId1813088fe1fbc01fb467"
-                        x1="43.376%"
-                        x2="50.316%"
-                        y1="2.242%"
-                        y2="89.03%"
-                      >
-                        <stop offset="0%" stopColor="#FFEA83"></stop>
-                        <stop offset="8.333%" stopColor="#FFDD35"></stop>
-                        <stop offset="100%" stopColor="#FFA800"></stop>
-                      </linearGradient>
-                    </defs>
-                    <path
-                      fill="url(#IconifyId1813088fe1fbc01fb466)"
-                      d="M255.153 37.938L134.897 252.976c-2.483 4.44-8.862 4.466-11.382.048L.875 37.958c-2.746-4.814 1.371-10.646 6.827-9.67l120.385 21.517a6.537 6.537 0 0 0 2.322-.004l117.867-21.483c5.438-.991 9.574 4.796 6.877 9.62Z"
-                    ></path>
-                    <path
-                      fill="url(#IconifyId1813088fe1fbc01fb467)"
-                      d="M185.432.063L96.44 17.501a3.268 3.268 0 0 0-2.634 3.014l-5.474 92.456a3.268 3.268 0 0 0 3.997 3.378l24.777-5.718c2.318-.535 4.413 1.507 3.936 3.838l-7.361 36.047c-.495 2.426 1.782 4.5 4.151 3.78l15.304-4.649c2.372-.72 4.652 1.36 4.15 3.788l-11.698 56.621c-.732 3.542 3.979 5.473 5.943 2.437l1.313-2.028l72.516-144.72c1.215-2.423-.88-5.186-3.54-4.672l-25.505 4.922c-2.396.462-4.435-1.77-3.759-4.114l16.646-57.705c.677-2.35-1.37-4.583-3.769-4.113Z"
-                    ></path>
-                  </svg>
-                  <span>Vite</span>
-                </li>
-              </ol>
-            </div>
-            <div>
-              <h4 className="text-base md:text-lg">Key takeaways</h4>
-              <ol className="list-disc pt-1 pl-5">
-                <li>
-                  <strong>EIP-155</strong>: I discovered that executing legacy transactions required
-                  the chainId at the sixth position in the raw transaction array for hashing,
-                  essential for replay protection. Learning about this and the ECDSA signature's 'v'
-                  component was a lesson learned the hard way.
-                </li>
-              </ol>
-            </div>
-          </div>
-          <div className="frosted-glass-dark space-y-4 p-5">
-            <div>
-              <h3 className="mb-4 text-2xl leading-tight md:text-3xl lg:text-4xl">
-                The Ethereal Forge
-              </h3>
-              <p>
-                A digital armory on the blockchain. This contract, powered by the Sepolia Testnet,
-                offers a collection of ERC1155 tokens ready for minting.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-base md:text-lg">Urls</h4>
-              <ul>
-                <li>
-                  Website:{' '}
-                  <a href="https://the-ethereal-forge.vercel.app/">
-                    https://the-ethereal-forge.vercel.app/
-                  </a>
-                </li>
-                <li>
-                  Github:{' '}
-                  <a href="https://github.com/Burtonium/the-ethereal-forge">
-                    https://github.com/Burtonium/the-ethereal-forge
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="mb-0 text-base md:text-lg">Tech stack:</h4>
-              <ol className="mt-0 flex flex-wrap">
-                <li className="m-2 flex items-center space-x-1">
-                  <img
-                    className="inline"
-                    width="22"
-                    height="22"
-                    src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
-                    alt="TypeScript logo"
-                  />
-                  <span>Typescript</span>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg className="inline" viewBox="0 0 180 180" width="18">
-                    <mask
-                      height="180"
-                      id=":r8:mask0_408_134"
-                      maskUnits="userSpaceOnUse"
-                      width="180"
-                      x="0"
-                      y="0"
-                      style={{ maskType: 'alpha' }}
-                    >
-                      <circle cx="90" cy="90" fill="black" r="90"></circle>
-                    </mask>
-                    <g mask="url(#:r8:mask0_408_134)">
-                      <circle cx="90" cy="90" data-circle="true" fill="black" r="90"></circle>
-                      <path
-                        d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-                        fill="url(#:r8:paint0_linear_408_134)"
-                      ></path>
-                      <rect
-                        fill="url(#:r8:paint1_linear_408_134)"
-                        height="72"
-                        width="12"
-                        x="115"
-                        y="54"
-                      ></rect>
-                    </g>
-                    <defs>
-                      <linearGradient
-                        gradientUnits="userSpaceOnUse"
-                        id=":r8:paint0_linear_408_134"
-                        x1="109"
-                        x2="144.5"
-                        y1="116.5"
-                        y2="160.5"
-                      >
-                        <stop stopColor="white"></stop>
-                        <stop offset="1" stopColor="white" stopOpacity="0"></stop>
-                      </linearGradient>
-                      <linearGradient
-                        gradientUnits="userSpaceOnUse"
-                        id=":r8:paint1_linear_408_134"
-                        x1="121"
-                        x2="120.799"
-                        y1="54"
-                        y2="106.875"
-                      >
-                        <stop stopColor="white"></stop>
-                        <stop offset="1" stopColor="white" stopOpacity="0"></stop>
-                      </linearGradient>
-                    </defs>
-                  </svg>
-                  <span>Nextjs</span>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg viewBox="0 0 248 31" className="h-4 w-auto">
-                    <title>Tailwindcss</title>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M25.517 0C18.712 0 14.46 3.382 12.758 10.146c2.552-3.382 5.529-4.65 8.931-3.805 1.941.482 3.329 1.882 4.864 3.432 2.502 2.524 5.398 5.445 11.722 5.445 6.804 0 11.057-3.382 12.758-10.145-2.551 3.382-5.528 4.65-8.93 3.804-1.942-.482-3.33-1.882-4.865-3.431C34.736 2.92 31.841 0 25.517 0zM12.758 15.218C5.954 15.218 1.701 18.6 0 25.364c2.552-3.382 5.529-4.65 8.93-3.805 1.942.482 3.33 1.882 4.865 3.432 2.502 2.524 5.397 5.445 11.722 5.445 6.804 0 11.057-3.381 12.758-10.145-2.552 3.382-5.529 4.65-8.931 3.805-1.941-.483-3.329-1.883-4.864-3.432-2.502-2.524-5.398-5.446-11.722-5.446z"
-                      fill="#38bdf8"
-                    ></path>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M76.546 12.825h-4.453v8.567c0 2.285 1.508 2.249 4.453 2.106v3.463c-5.962.714-8.332-.928-8.332-5.569v-8.567H64.91V9.112h3.304V4.318l3.879-1.143v5.937h4.453v3.713zM93.52 9.112h3.878v17.849h-3.878v-2.57c-1.365 1.891-3.484 3.034-6.285 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.285 2.999V9.112zm-5.674 14.636c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm16.016-17.313c-1.364 0-2.477-1.142-2.477-2.463a2.475 2.475 0 012.477-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.879v17.849h-3.879zm8.368 0V.9h3.878v26.06h-3.878zm29.053-17.849h4.094l-5.638 17.849h-3.807l-3.735-12.03-3.771 12.03h-3.806l-5.639-17.849h4.094l3.484 12.315 3.771-12.315h3.699l3.734 12.315 3.52-12.315zm8.906-2.677c-1.365 0-2.478-1.142-2.478-2.463a2.475 2.475 0 012.478-2.463 2.475 2.475 0 012.478 2.463c0 1.32-1.113 2.463-2.478 2.463zm-1.939 20.526V9.112h3.878v17.849h-3.878zm17.812-18.313c4.022 0 6.895 2.713 6.895 7.354V26.96h-3.878V16.394c0-2.713-1.58-4.14-4.022-4.14-2.55 0-4.561 1.499-4.561 5.14v9.567h-3.879V9.112h3.879v2.285c1.185-1.856 3.124-2.749 5.566-2.749zm25.282-6.675h3.879V26.96h-3.879v-2.57c-1.364 1.892-3.483 3.034-6.284 3.034-4.884 0-8.942-4.105-8.942-9.389 0-5.318 4.058-9.388 8.942-9.388 2.801 0 4.92 1.142 6.284 2.999V1.973zm-5.674 21.775c3.232 0 5.674-2.392 5.674-5.712s-2.442-5.711-5.674-5.711-5.674 2.392-5.674 5.711c0 3.32 2.442 5.712 5.674 5.712zm22.553 3.677c-5.423 0-9.481-4.105-9.481-9.389 0-5.318 4.058-9.388 9.481-9.388 3.519 0 6.572 1.82 8.008 4.605l-3.34 1.928c-.79-1.678-2.549-2.749-4.704-2.749-3.16 0-5.566 2.392-5.566 5.604 0 3.213 2.406 5.605 5.566 5.605 2.155 0 3.914-1.107 4.776-2.749l3.34 1.892c-1.508 2.82-4.561 4.64-8.08 4.64zm14.472-13.387c0 3.249 9.661 1.285 9.661 7.89 0 3.57-3.125 5.497-7.003 5.497-3.591 0-6.177-1.607-7.326-4.177l3.34-1.927c.574 1.606 2.011 2.57 3.986 2.57 1.724 0 3.052-.571 3.052-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.909-5.462 6.572-5.462 2.945 0 5.387 1.357 6.644 3.713l-3.268 1.82c-.647-1.392-1.904-2.035-3.376-2.035-1.401 0-2.622.607-2.622 1.892zm16.556 0c0 3.249 9.66 1.285 9.66 7.89 0 3.57-3.124 5.497-7.003 5.497-3.591 0-6.176-1.607-7.326-4.177l3.34-1.927c.575 1.606 2.011 2.57 3.986 2.57 1.724 0 3.053-.571 3.053-2 0-3.176-9.66-1.391-9.66-7.781 0-3.356 2.908-5.462 6.572-5.462 2.944 0 5.386 1.357 6.643 3.713l-3.268 1.82c-.646-1.392-1.903-2.035-3.375-2.035-1.401 0-2.622.607-2.622 1.892z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="h-5 w-20 text-white"
-                    aria-label="Vercel logotype"
-                    height="64"
-                    role="img"
-                    viewBox="0 0 283 64"
-                    width="283"
-                  >
-                    <title>Vercel</title>
-                    <path
-                      d="M141.68 16.25c-11.04 0-19 7.2-19 18s8.96 18 20 18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 2.21-5.09 3.5-8.54 3.5-4.79 0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 0-10.79-7.96-17.99-19-17.99zm-9.46 14.5c1.25-3.99 4.67-6.5 9.45-6.5 4.79 0 8.21 2.51 9.45 6.5h-18.9zm117.14-14.5c-11.04 0-19 7.2-19 18s8.96 18 20 18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 2.21-5.09 3.5-8.54 3.5-4.79 0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 0-10.79-7.96-17.99-19-17.99zm-9.45 14.5c1.25-3.99 4.67-6.5 9.45-6.5 4.79 0 8.21 2.51 9.45 6.5h-18.9zm-39.03 3.5c0 6 3.92 10 10 10 4.12 0 7.21-1.87 8.8-4.92l7.68 4.43c-3.18 5.3-9.14 8.49-16.48 8.49-11.05 0-19-7.2-19-18s7.96-18 19-18c7.34 0 13.29 3.19 16.48 8.49l-7.68 4.43c-1.59-3.05-4.68-4.92-8.8-4.92-6.07 0-10 4-10 10zm82.48-29v46h-9v-46h9zM37.59.25l36.95 64H.64l36.95-64zm92.38 5l-27.71 48-27.71-48h10.39l17.32 30 17.32-30h10.39zm58.91 12v9.69c-1-.29-2.06-.49-3.2-.49-5.81 0-10 4-10 10v14.8h-9v-34h9v9.2c0-5.08 5.91-9.2 13.2-9.2z"
-                      fill="currentColor"
-                    ></path>
-                  </svg>
-                </li>
-                <li className="flex items-center">
-                  <svg
-                    className="-m-1 h-9 w-9"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 1300 1300"
-                    xmlSpace="preserve"
-                  >
-                    <path
-                      opacity=".45"
-                      d="M773.772 253.308 643.068 485.61H381.842l130.614-232.302h261.316"
-                    />
-                    <path
-                      opacity=".6"
-                      d="M643.068 485.61h261.318L773.772 253.308H512.456L643.068 485.61z"
-                    />
-                    <path
-                      opacity=".8"
-                      d="M512.456 717.822 643.068 485.61 512.456 253.308 381.842 485.61l130.614 232.212z"
-                    />
-                    <path
-                      opacity=".45"
-                      d="m513.721 1066.275 130.704-232.303h261.318l-130.705 232.303H513.721"
-                    />
-                    <path
-                      opacity=".6"
-                      d="M644.424 833.973H383.107l130.613 232.303h261.317L644.424 833.973z"
-                    />
-                    <path
-                      opacity=".8"
-                      d="M775.038 601.761 644.424 833.973l130.614 232.303 130.704-232.303-130.704-232.212z"
-                    />
-                  </svg>
-                  <span>Solidity</span>
-                </li>
-              </ol>
-            </div>
-            <div>
-              <h4 className="text-base md:text-lg">Key takeaways</h4>
-              <ol className="list-disc pt-1 pl-5">
-                <li>Purpose-built languages (Solidity) are great and cut down on complexity.</li>
-                <li>Smart contracts are a lot simpler than I anticipated.</li>
               </ol>
             </div>
           </div>

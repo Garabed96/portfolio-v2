@@ -218,3 +218,22 @@ body {
     rotate: 180deg;
   }
 }
+
+.snap-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory; /* vertical snapping */
+  scroll-behavior: smooth; /* optional: animated scroll */
+  overscroll-behavior: contain; /* prevent parent page bounce */
+  -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
+}
+
+.snap-container section {
+  scroll-snap-align: start; /* where the element should align */
+  scroll-snap-stop: always; /* optional: don’t skip over sections */
+  min-height: 100vh; /* full screen section */
+}
+
+.snap-container section:nth-child(1) {
+  scroll-snap-align: start;
+}
