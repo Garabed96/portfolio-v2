@@ -1,31 +1,45 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import useClickOutside from '../hooks/useClickOutside';
+
+const navItems = [
+  { id: 'introduction', label: 'About' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'experience', label: 'Experience' }
+];
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState('introduction');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const navbarRef = useRef<HTMLDivElement>(null);
-
-  const navItems = [
-    { id: 'introduction', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'experience', label: 'Experience' }
-  ];
 
   // Handle smooth scrolling to sections
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    if (element) {
-      // Use scrollIntoView for better compatibility with scroll snap
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+    const snapContainer = document.querySelector('.snap-container') as HTMLElement;
+
+    if (element && snapContainer) {
+      // Update active section immediately for better UX
+      setActiveSection(sectionId);
+
+      // Set scrolling flag to prevent scroll handler from overriding
+      setIsScrolling(true);
+
+      // Scroll the snap container to the section
+      snapContainer.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
       });
+
+      // Reset scrolling flag after animation completes
+      setTimeout(() => {
+        setIsScrolling(false);
+      }, 1000); // Adjust timing based on your scroll animation
     } else {
-      console.warn(`Section with id "${sectionId}" not found`);
+      console.warn(`Section with id "${sectionId}" or snap container not found`);
     }
     // Close mobile menu when navigating
     setIsMobileMenuOpen(false);
@@ -40,26 +54,37 @@ const Navbar = () => {
 
   // Track which section is currently in view
   useEffect(() => {
+    const snapContainer = document.querySelector('.snap-container') as HTMLElement;
+
+    if (!snapContainer) {
+      console.warn('Snap container not found');
+      return;
+    }
+
     const handleScroll = () => {
       const sections = navItems.map((item) => document.getElementById(item.id)).filter(Boolean);
-      const navbarHeight = 64; // Match the scroll function offset
-      const scrollPosition = window.scrollY + navbarHeight + 50; // Add some buffer
+      const scrollPosition = snapContainer.scrollTop + 100; // Add some buffer
 
+      let activeId = 'introduction';
+
+      // Find the section that's currently in view
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(section.id);
+          activeId = section.id;
           break;
         }
       }
+
+      setActiveSection(activeId);
     };
 
-    // Call once on mount to set initial active section
+    // Call once on mount
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    snapContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => snapContainer.removeEventListener('scroll', handleScroll);
+  }, [isScrolling]);
 
   return (
     <nav ref={navbarRef} className="fixed top-0 right-0 left-0 z-50 bg-black/20 backdrop-blur-md">
