@@ -98,6 +98,17 @@ export default function RootLayout({
         <meta name="color-scheme" content="dark" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/favicon.ico" />
+        {/* Preload critical project images - these will be handled by Next.js Image optimization */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://cdn-icons-png.flaticon.com/512/919/919832.png"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="https://www.postgresql.org/media/img/about/press/elephant.png"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

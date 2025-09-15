@@ -3,6 +3,7 @@
 import { useReducer, useState } from 'react';
 import MouseShadow from './components/MouseShadow';
 import Navbar from './components/Navbar';
+import { useImagePreloader } from './hooks/useImagePreloader';
 import {
   GithubIcon,
   LinkedinIcon,
@@ -40,6 +41,7 @@ import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
 import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { cn } from '@/utils';
 import { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 type Project = {
   name: string;
@@ -186,6 +188,13 @@ export default function Home() {
   const [state, dispatch] = useReducer(portfolioReducer, initialState);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Preload next images for better performance
+  useImagePreloader({
+    images: state.selectedProject.images.map((img) => img.src),
+    preloadNext: true,
+    currentIndex: state.selectedImage
+  });
 
   const handleNextProject = () => {
     dispatch({ type: 'nextProject' });
@@ -409,7 +418,7 @@ export default function Home() {
       </section>
       <section className="main-section flex flex-col items-center justify-center" id="projects">
         <h2 className="mb-12 px-3 text-center text-3xl md:text-4xl lg:text-5xl">
-          I've made &nbsp;
+          I've made&nbsp;
           {projects.map((project) => (
             <span
               key={project.name}
@@ -445,10 +454,15 @@ export default function Home() {
                 if (currentProject && 'images' in currentProject && currentProject.images) {
                   return (
                     <>
-                      <img
-                        src={currentProject.images[state.selectedImage]?.src}
+                      <Image
+                        src={currentProject.images[state.selectedImage]}
                         alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
                         className="w-full max-w-5xl drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                        priority={state.selectedImage === 0}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                        quality={90}
+                        width={1200}
+                        height={800}
                       />
                       {/* Overlay icons in bottom right */}
                       <div className="absolute right-4 bottom-4 flex gap-2">
@@ -504,10 +518,15 @@ export default function Home() {
               if (currentProject && 'images' in currentProject && currentProject.images) {
                 return (
                   <>
-                    <img
-                      src={currentProject.images[state.selectedImage]?.src}
+                    <Image
+                      src={currentProject.images[state.selectedImage]}
                       alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
                       className="w-full drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                      priority={state.selectedImage === 0}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                      quality={90}
+                      width={1200}
+                      height={800}
                     />
                     {/* Overlay icons in bottom right */}
                     <div className="absolute right-4 bottom-4 flex gap-2">
@@ -605,12 +624,13 @@ export default function Home() {
               <h4 className="mb-0 text-lg md:text-xl">Tech utilized:</h4>
               <ol className="mt-0 flex flex-wrap">
                 <li className="m-2 flex items-center gap-x-1">
-                  <img
+                  <Image
                     className="inline"
-                    width="22"
-                    height="22"
+                    width={22}
+                    height={22}
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
                     alt="TypeScript logo"
+                    unoptimized
                   />
                   <span>Typescript</span>
                 </li>
@@ -745,12 +765,13 @@ export default function Home() {
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <a href="https://www.postgresql.org/">
-                    <img
+                    <Image
                       className="inline"
-                      width="22"
-                      height="22"
+                      width={22}
+                      height={22}
                       src="https://www.postgresql.org/media/img/about/press/elephant.png"
                       alt="PostgreSQL logo"
+                      unoptimized
                     />
                   </a>
                   <span>Postgresql</span>
@@ -888,12 +909,13 @@ export default function Home() {
               <h4 className="mb-0 text-lg md:text-xl">Tech utilized:</h4>
               <ol className="mt-0 flex flex-wrap">
                 <li className="m-2 flex items-center gap-x-1">
-                  <img
+                  <Image
                     className="inline"
-                    width="22"
-                    height="22"
+                    width={22}
+                    height={22}
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
                     alt="TypeScript logo"
+                    unoptimized
                   />
                   <span>Typescript</span>
                 </li>
@@ -1028,12 +1050,13 @@ export default function Home() {
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <a href="https://www.postgresql.org/">
-                    <img
+                    <Image
                       className="inline"
-                      width="22"
-                      height="22"
+                      width={22}
+                      height={22}
                       src="https://www.postgresql.org/media/img/about/press/elephant.png"
                       alt="PostgreSQL logo"
+                      unoptimized
                     />
                   </a>
                   <span>Postgresql</span>
@@ -1180,12 +1203,13 @@ export default function Home() {
               <h4 className="mb-0 text-lg md:text-xl">Tech utilized:</h4>
               <ol className="mt-0 flex flex-wrap">
                 <li className="m-2 flex items-center space-x-1">
-                  <img
+                  <Image
                     className="inline"
-                    width="22"
-                    height="22"
+                    width={22}
+                    height={22}
                     src="https://cdn-icons-png.flaticon.com/512/919/919832.png"
                     alt="TypeScript logo"
+                    unoptimized
                   />
                   <span>Typescript</span>
                 </li>
@@ -1271,12 +1295,13 @@ export default function Home() {
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <a href="https://www.postgresql.org/">
-                    <img
+                    <Image
                       className="inline"
-                      width="22"
-                      height="22"
+                      width={22}
+                      height={22}
                       src="https://www.postgresql.org/media/img/about/press/elephant.png"
                       alt="PostgreSQL logo"
+                      unoptimized
                     />
                   </a>
                   <span>Postgresql</span>
