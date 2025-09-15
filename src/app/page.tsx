@@ -196,7 +196,12 @@ export default function Home() {
   };
 
   const handleNextImage = () => {
-    dispatch({ type: 'nextImage' });
+    if (state.hasNextImage) {
+      dispatch({ type: 'nextImage' });
+    } else {
+      // If no next image, go to next project
+      handleNextProject();
+    }
   };
 
   const handlePreviousImage = () => {
@@ -476,14 +481,7 @@ export default function Home() {
                 return <div className="aspect-square">No image available</div>;
               })()}
             </div>
-            <button
-              className={cn(
-                'cursor-pointer',
-                state.hasNextImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
-              )}
-              onClick={handleNextImage}
-              disabled={!state.hasNextImage}
-            >
+            <button className="text-primary-400 cursor-pointer" onClick={handleNextImage}>
               <ChevronRight className="size-16" />
             </button>
             <button className="text-primary-400 cursor-pointer" onClick={handleNextProject}>
@@ -560,14 +558,8 @@ export default function Home() {
                       </div>
                       <div className="flex gap-2">
                         <button
-                          className={cn(
-                            'cursor-pointer rounded-full bg-black/30 p-2',
-                            state.hasNextImage
-                              ? 'text-primary-400'
-                              : 'cursor-not-allowed text-gray-500'
-                          )}
+                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
                           onClick={handleNextImage}
-                          disabled={!state.hasNextImage}
                         >
                           <ChevronRight className="size-8" />
                         </button>
