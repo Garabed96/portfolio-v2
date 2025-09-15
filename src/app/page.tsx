@@ -1,7 +1,8 @@
 'use client';
 
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import MouseShadow from './components/MouseShadow';
+import Navbar from './components/Navbar';
 import {
   GithubIcon,
   LinkedinIcon,
@@ -30,15 +31,35 @@ import nodeOperatorDashboardScreen3 from './assets/node-operator-dashboard-scree
 import webMessengerScreen1 from './assets/web-messenger-screen-1.png';
 import webMessengerScreen2 from './assets/web-messenger-screen-2.png';
 import webMessengerScreen3 from './assets/web-messenger-screen-3.png';
+import tokenSaleScreen1 from './assets/token-sale-screen-1.png';
+import tokenSaleScreen2 from './assets/token-sale-screen-2.png';
+import tokenDashboardScreen1 from './assets/token-dashboard-screen-1.png';
+import tokenDashboardScreen2 from './assets/token-dashboard-screen-2.png';
+import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
 
-import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import { cn } from '@/utils';
+import { StaticImageData } from 'next/image';
 
-const projects = [
+type Project = {
+  name: string;
+  repo?: string;
+  url?: string;
+  images: StaticImageData[];
+};
+
+const projects: Project[] = [
   {
     name: 'token dashboards',
     repo: 'https://github.com/Burtonium/token-dashboard',
-    images: []
+    url: 'https://staging.vip.realworldgaming.io',
+    images: [tokenDashboardScreen1, tokenDashboardScreen2, tokenDashboardScreen3]
+  },
+  {
+    name: 'token sale portals',
+    repo: 'https://github.com/Burtonium/token-sale-portal',
+    images: [tokenSaleScreen1, tokenSaleScreen2],
+    url: 'https://sale.getrealtoken.io/'
   },
   {
     name: 'points applications',
@@ -163,6 +184,8 @@ function portfolioReducer(state: State, action: Action): State {
 
 export default function Home() {
   const [state, dispatch] = useReducer(portfolioReducer, initialState);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   const handleNextProject = () => {
     dispatch({ type: 'nextProject' });
@@ -180,12 +203,57 @@ export default function Home() {
     dispatch({ type: 'previousImage' });
   };
 
+  // Touch event handlers for mobile gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      // Swipe left - go to next project
+      handleNextProject();
+    } else if (isRightSwipe) {
+      // Swipe right - go to previous project
+      handlePreviousProject();
+    }
+  };
+
+  // Tap handler for next image
+  const handleImageTap = (e: React.MouseEvent) => {
+    // Only handle tap if it's not on a button
+    if ((e.target as HTMLElement).closest('button')) {
+      return;
+    }
+
+    // Check if we're on mobile (screen width < 768px)
+    if (window.innerWidth < 768) {
+      if (state.hasNextImage) {
+        handleNextImage();
+      } else {
+        // If no next image, go to next project
+        handleNextProject();
+      }
+    }
+  };
+
   return (
     <main className="snap-container">
+      <Navbar />
       <MouseShadow />
       <section
         id="introduction"
-        className="relative z-10 flex flex-col items-center justify-center px-4 py-16 md:px-8 md:py-20 lg:px-12 lg:py-24"
+        className="relative z-10 flex flex-col items-center justify-center px-4 pt-24 pb-16 md:px-8 md:pt-28 md:pb-20 lg:px-12 lg:pt-32 lg:pb-24"
         aria-label="Hero section with personal introduction"
       >
         <div className="flex w-full items-center justify-center">
@@ -335,7 +403,7 @@ export default function Home() {
         </ol>
       </section>
       <section className="flex flex-col items-center justify-center" id="projects">
-        <h2 className="mb-12 text-3xl md:text-4xl lg:text-5xl">
+        <h2 className="mb-12 px-3 text-center text-3xl md:text-4xl lg:text-5xl">
           I've made &nbsp;
           {projects.map((project) => (
             <span
@@ -347,53 +415,181 @@ export default function Home() {
               {project.name}
             </span>
           ))}
+          .
         </h2>
+        <div className="relative">
+          <div className="hidden md:flex">
+            <button className="text-primary-400 cursor-pointer" onClick={handlePreviousProject}>
+              <ChevronFirst className="size-16" />
+            </button>
+            <button
+              className={cn(
+                'cursor-pointer',
+                state.hasPreviousImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
+              )}
+              onClick={handlePreviousImage}
+              disabled={!state.hasPreviousImage}
+            >
+              <ChevronLeft className="size-16" />
+            </button>
+            <div className="relative grow">
+              {(() => {
+                const currentProject = projects.find(
+                  (project) => project.name === state.selectedProject.name
+                );
+                if (currentProject && 'images' in currentProject && currentProject.images) {
+                  return (
+                    <>
+                      <img
+                        src={currentProject.images[state.selectedImage]?.src}
+                        alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
+                        className="w-full max-w-5xl drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                      />
+                      {/* Overlay icons in bottom right */}
+                      <div className="absolute right-4 bottom-4 flex gap-2">
+                        {currentProject.repo && (
+                          <a
+                            href={currentProject.repo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
+                            title="View on GitHub"
+                          >
+                            <GithubIcon className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
+                          </a>
+                        )}
+                        {currentProject.url && (
+                          <a
+                            href={currentProject.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
+                            title="Visit website"
+                          >
+                            <ExternalLink className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
+                          </a>
+                        )}
+                      </div>
+                    </>
+                  );
+                }
+                return <div className="aspect-square">No image available</div>;
+              })()}
+            </div>
+            <button
+              className={cn(
+                'cursor-pointer',
+                state.hasNextImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
+              )}
+              onClick={handleNextImage}
+              disabled={!state.hasNextImage}
+            >
+              <ChevronRight className="size-16" />
+            </button>
+            <button className="text-primary-400 cursor-pointer" onClick={handleNextProject}>
+              <ChevronLast className="size-16" />
+            </button>
+          </div>
 
-        <div className="flex">
-          <button className="text-primary-400 cursor-pointer" onClick={handlePreviousProject}>
-            <ChevronFirst className="size-16" />
-          </button>
-          <button
-            className={cn(
-              'cursor-pointer',
-              state.hasPreviousImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
-            )}
-            onClick={handlePreviousImage}
-            disabled={!state.hasPreviousImage}
+          {/* Mobile layout - buttons overlaid on image */}
+          <div
+            className="relative md:hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onClick={handleImageTap}
           >
-            <ChevronLeft className="size-16" />
-          </button>
-          <div className="grow">
             {(() => {
               const currentProject = projects.find(
                 (project) => project.name === state.selectedProject.name
               );
               if (currentProject && 'images' in currentProject && currentProject.images) {
                 return (
-                  <img
-                    src={currentProject.images[state.selectedImage]?.src}
-                    alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
-                    className="max-w-5xl"
-                  />
+                  <>
+                    <img
+                      src={currentProject.images[state.selectedImage]?.src}
+                      alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
+                      className="w-full drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
+                    />
+                    {/* Overlay icons in bottom right */}
+                    <div className="absolute right-4 bottom-4 flex gap-2">
+                      {currentProject.repo && (
+                        <a
+                          href={currentProject.repo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
+                          title="View on GitHub"
+                        >
+                          <GithubIcon className="text-primary-400 h-8 w-8 drop-shadow-lg" />
+                        </a>
+                      )}
+                      {currentProject.url && (
+                        <a
+                          href={currentProject.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
+                          title="Visit website"
+                        >
+                          <ExternalLink className="text-primary-400 h-8 w-8 drop-shadow-lg" />
+                        </a>
+                      )}
+                    </div>
+                    {/* Mobile navigation buttons overlaid on image */}
+                    <div className="absolute top-1/2 right-0 left-0 flex items-center justify-between px-2">
+                      <div className="flex gap-2">
+                        <button
+                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
+                          onClick={handlePreviousProject}
+                        >
+                          <ChevronFirst className="size-8" />
+                        </button>
+                        <button
+                          className={cn(
+                            'cursor-pointer rounded-full bg-black/30 p-2',
+                            state.hasPreviousImage
+                              ? 'text-primary-400'
+                              : 'cursor-not-allowed text-gray-500'
+                          )}
+                          onClick={handlePreviousImage}
+                          disabled={!state.hasPreviousImage}
+                        >
+                          <ChevronLeft className="size-8" />
+                        </button>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          className={cn(
+                            'cursor-pointer rounded-full bg-black/30 p-2',
+                            state.hasNextImage
+                              ? 'text-primary-400'
+                              : 'cursor-not-allowed text-gray-500'
+                          )}
+                          onClick={handleNextImage}
+                          disabled={!state.hasNextImage}
+                        >
+                          <ChevronRight className="size-8" />
+                        </button>
+                        <button
+                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
+                          onClick={handleNextProject}
+                        >
+                          <ChevronLast className="size-8" />
+                        </button>
+                      </div>
+                    </div>
+                  </>
                 );
               }
-              return <div className="aspect-square">No image available</div>;
+              return <div className="aspect-square w-full">No image available</div>;
             })()}
           </div>
-          <button
-            className={cn(
-              'cursor-pointer',
-              state.hasNextImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
-            )}
-            onClick={handleNextImage}
-            disabled={!state.hasNextImage}
-          >
-            <ChevronRight className="size-16" />
-          </button>
-          <button className="text-primary-400 cursor-pointer" onClick={handleNextProject}>
-            <ChevronLast className="size-16" />
-          </button>
         </div>
+        <p className="text-primary-400/75 mt-5 max-w-xl text-center text-sm">
+          **Some of these project urls are <strong>not production deployments</strong> and may be
+          moved, be partially broken or completely down. Please notify me if you find any issues.**
+        </p>
       </section>
       <section
         id="experience"
@@ -401,7 +597,7 @@ export default function Home() {
         aria-label="Work experience section"
       >
         <h2 className="mb-12 text-3xl md:text-4xl lg:text-5xl">Recent Work Experience</h2>
-        <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2">
+        <div className="m-auto grid max-w-6xl gap-10 text-left lg:grid-cols-2 [&>*:nth-child(odd):last-child]:lg:col-span-2 [&>*:nth-child(odd):last-child]:lg:max-w-2xl [&>*:nth-child(odd):last-child]:lg:justify-self-center">
           <div className="frosted-glass-dark space-y-4 p-5">
             <div>
               <h3 className="mb-2 text-2xl leading-tight md:text-3xl lg:text-4xl">
