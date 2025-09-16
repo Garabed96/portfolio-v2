@@ -16,3 +16,6 @@ export { BackendSystemsIcon } from './BackendSystemsIcon';
 export { ViteIcon } from './ViteIcon';
 export { AwsIcon } from './AwsIcon';
 export { VercelIcon } from './VercelIcon';
+export { HardhatIcon } from './HardhatIcon';
+export { GraphQLIcon } from './GraphQLIcon';
+export { ExpressIcon } from './ExpressIcon';

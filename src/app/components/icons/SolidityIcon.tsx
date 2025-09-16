@@ -4,9 +4,7 @@ interface SolidityIconProps {
   className?: string;
 }
 
-export const SolidityIcon: React.FC<SolidityIconProps> = ({
-  className = '-m-1 h-9 w-9 fill-white'
-}) => {
+export const SolidityIcon: React.FC<SolidityIconProps> = ({ className = '-m-1 h-9 w-9' }) => {
   return (
     <svg
       className={className}
