@@ -13,8 +13,6 @@ interface ImageCarouselProps {
   imageClassName?: string;
   showNavigation?: boolean;
   showDots?: boolean;
-  autoPlay?: boolean;
-  autoPlayInterval?: number;
   shouldPreload?: boolean;
 }
 
@@ -26,8 +24,6 @@ export default function ImageCarousel({
   imageClassName = '',
   showNavigation = true,
   showDots = true,
-  autoPlay = false,
-  autoPlayInterval = 3000,
 }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -134,16 +130,6 @@ export default function ImageCarousel({
     }
   };
 
-  useEffect(() => {
-    if (!autoPlay) return;
-
-    const interval = setInterval(() => {
-      goToNext();
-    }, autoPlayInterval);
-
-    return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, goToNext]);
-
   if (images.length === 0) {
     return (
       <div
@@ -168,6 +154,7 @@ export default function ImageCarousel({
           {images.map((image, index) => (
             <div key={index} className="flex h-full w-full flex-shrink-0 snap-center snap-always">
               <Image
+                loading="eager"
                 src={image}
                 alt={`Image ${index + 1}`}
                 className={cn('h-auto w-full object-cover', imageClassName)}
