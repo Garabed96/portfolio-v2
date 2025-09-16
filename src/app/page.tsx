@@ -4,7 +4,6 @@ import { useMemo, useReducer } from 'react';
 import MouseShadow from './components/MouseShadow';
 import Navbar from './components/Navbar';
 import ImageCarousel from './components/ImageCarousel';
-import { useImagePreloader } from './hooks/useImagePreloader';
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import {
   ExpressIcon,
@@ -187,17 +186,6 @@ export default function Home() {
     [state.selectedImageIndex]
   );
 
-  const [projectsRef, isProjectsVisible] = useIntersectionObserver({
-    threshold: 0.1,
-    rootMargin: '0px',
-    freezeOnceVisible: true,
-  });
-
-  useImagePreloader({
-    enable: isProjectsVisible,
-    images: allImages,
-  });
-
   return (
     <main className="snap-container">
       <Navbar />
@@ -354,7 +342,6 @@ export default function Home() {
         </ol>
       </section>
       <section
-        ref={projectsRef}
         className="main-section flex flex-col items-center justify-center py-16"
         id="projects"
       >
