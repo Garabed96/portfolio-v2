@@ -4,7 +4,6 @@ import { useMemo, useReducer } from 'react';
 import MouseShadow from './components/MouseShadow';
 import Navbar from './components/Navbar';
 import ImageCarousel from './components/ImageCarousel';
-import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import {
   ExpressIcon,
   HardhatIcon,
