@@ -6,13 +6,13 @@ const raleway = Raleway({
   variable: '--font-raleway',
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  display: 'swap'
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
   title: {
     default: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
-    template: '%s | Mathieu Bertin - Full Stack Developer'
+    template: '%s | Mathieu Bertin - Full Stack Developer',
   },
   description:
     'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies. Available for consulting and development projects.',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     'Software Engineer',
     'Portfolio',
     'Balthazar DAO',
-    'xx network'
+    'xx network',
   ],
   authors: [{ name: 'Mathieu Bertin', url: 'https://github.com/burtonium' }],
   creator: 'Mathieu Bertin',
@@ -39,11 +39,11 @@ export const metadata: Metadata = {
   formatDetection: {
     email: false,
     address: false,
-    telephone: false
+    telephone: false,
   },
   metadataBase: new URL('https://portfolio.nephelo.io'),
   alternates: {
-    canonical: '/'
+    canonical: '/',
   },
   openGraph: {
     type: 'website',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     siteName: 'Mathieu Bertin - Full Stack Developer',
     title: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.'
+      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
     // images: [
     //   {
     //     url: '/profile.jpg',
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     creator: '@matt_burton',
     title: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.'
+      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
     // images: ['/profile.jpg']
   },
   robots: {
@@ -80,13 +80,13 @@ export const metadata: Metadata = {
       follow: true,
       'max-video-preview': -1,
       'max-image-preview': 'large',
-      'max-snippet': -1
-    }
-  }
+      'max-snippet': -1,
+    },
+  },
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -122,7 +122,7 @@ export default function RootLayout({
               url: 'https://portfolio.nephelo.io',
               sameAs: [
                 'https://github.com/burtonium',
-                'https://www.linkedin.com/in/mathieu-bertin'
+                'https://www.linkedin.com/in/mathieu-bertin',
               ],
               knowsAbout: [
                 'Web3 Development',
@@ -131,17 +131,17 @@ export default function RootLayout({
                 'TypeScript',
                 'Node.js',
                 'Smart Contracts',
-                'DApp Development'
+                'DApp Development',
               ],
               worksFor: {
                 '@type': 'Organization',
-                name: 'Balthazar DAO'
+                name: 'Balthazar DAO',
               },
               alumniOf: {
                 '@type': 'Organization',
-                name: 'xx network'
-              }
-            })
+                name: 'xx network',
+              },
+            }),
           }}
         />
       </head>

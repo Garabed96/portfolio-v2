@@ -19,9 +19,9 @@ export function useImagePreloader({ enable = true, images }: UseImagePreloaderPr
   useEffect(() => {
     if (!enable || images.length === 0) return;
 
-    images.forEach((imageSrc) => {
+    images.forEach(imageSrc => {
       const img = new Image();
       img.src = imageSrc;
     });
-  }, [images]);
+  }, [enable, images]);
 }

@@ -1,29 +1,18 @@
-# Subgraph generated files and templates
-apps/subgraph/generated/
-apps/subgraph/subgraph.template.yaml
-
-# Node modules and build artifacts
+# Dependencies
 node_modules/
-dist/
-build/
+.pnpm-store/
+
+# Production builds
 .next/
 out/
-
-# Package manager files
-pnpm-lock.yaml
-yarn.lock
-package-lock.json
+build/
+dist/
 
 # Environment files
-.env
-.env.local
-.env.*.local
+.env*
 
 # Logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 
 # Runtime data
 pids
@@ -43,6 +32,15 @@ jspm_packages/
 # Optional npm cache directory
 .npm
 
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
 # Optional REPL history
 .node_repl_history
 
@@ -51,9 +49,6 @@ jspm_packages/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -79,3 +74,25 @@ jspm_packages/
 
 # TernJS port file
 .tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

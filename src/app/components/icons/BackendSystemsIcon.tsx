@@ -5,7 +5,7 @@ interface BackendSystemsIconProps {
 }
 
 export const BackendSystemsIcon: React.FC<BackendSystemsIconProps> = ({
-  className = 'h-12 w-12 fill-[#14b8a6]'
+  className = 'h-12 w-12 fill-[#14b8a6]',
 }) => {
   return (
     <svg

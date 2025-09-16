@@ -4,7 +4,7 @@ interface AwsIconProps {
   className?: string;
 }
 
-export const AwsIcon: React.FC<AwsIconProps> = ({ className = '-mb-2.5 w-8' }) => {
+export const AwsIcon: React.FC<AwsIconProps> = ({ className: _className = '-mb-2.5 w-8' }) => {
   return (
     <svg
       className="-mb-2.5 w-8"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/utils';
@@ -27,7 +27,7 @@ export default function ImageCarousel({
   showNavigation = true,
   showDots = true,
   autoPlay = false,
-  autoPlayInterval = 3000
+  autoPlayInterval = 3000,
 }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(selectedIndex);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -53,7 +53,7 @@ export default function ImageCarousel({
     return () => container.removeEventListener('scroll', handleScroll);
   }, [currentIndex, images.length, onIndexChange]);
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     if (containerRef.current) {
       const container = containerRef.current.querySelector('.flex.h-full.w-full');
       if (container) {
@@ -61,12 +61,12 @@ export default function ImageCarousel({
         const scrollLeft = nextIndex * container.clientWidth;
         container.scrollTo({
           left: scrollLeft,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
         setCurrentIndex(nextIndex);
       }
     }
-  };
+  }, [currentIndex, images.length]);
 
   const goToPrevious = () => {
     if (containerRef.current) {
@@ -76,7 +76,7 @@ export default function ImageCarousel({
         const scrollLeft = prevIndex * container.clientWidth;
         container.scrollTo({
           left: scrollLeft,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
         setCurrentIndex(prevIndex);
       }
@@ -90,7 +90,7 @@ export default function ImageCarousel({
         const scrollLeft = index * container.clientWidth;
         container.scrollTo({
           left: scrollLeft,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
         setCurrentIndex(index);
         // onIndexChange will be called by the scroll event handler
@@ -142,7 +142,7 @@ export default function ImageCarousel({
     }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [autoPlay, autoPlayInterval, currentIndex]);
+  }, [autoPlay, autoPlayInterval, goToNext]);
 
   if (images.length === 0) {
     return (

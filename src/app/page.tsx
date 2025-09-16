@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useReducer, useState } from 'react';
+import { useMemo, useReducer } from 'react';
 import MouseShadow from './components/MouseShadow';
 import Navbar from './components/Navbar';
 import ImageCarousel from './components/ImageCarousel';
@@ -26,7 +26,7 @@ import {
   BackendSystemsIcon,
   AwsIcon,
   VercelIcon,
-  GraphQLIcon
+  GraphQLIcon as _GraphQLIcon,
 } from './components/icons';
 import pointsAppScreen1 from './assets/points-app-screen-1.png';
 import pointsAppScreen2 from './assets/points-app-screen-2.png';
@@ -63,30 +63,30 @@ const projects: Project[] = [
     name: 'token dashboards',
     repo: 'https://github.com/Burtonium/token-dashboard',
     url: 'https://staging.vip.realworldgaming.io',
-    images: [tokenDashboardScreen1, tokenDashboardScreen2, tokenDashboardScreen3]
+    images: [tokenDashboardScreen1, tokenDashboardScreen2, tokenDashboardScreen3],
   },
   {
     name: 'token sale portals',
     repo: 'https://github.com/Burtonium/token-sale-portal',
     images: [tokenSaleScreen1, tokenSaleScreen2],
-    url: 'https://sale.getrealtoken.io/'
+    url: 'https://sale.getrealtoken.io/',
   },
   {
     name: 'points applications',
     url: 'https://quest.talisman.xyz/',
-    images: [pointsAppScreen1, pointsAppScreen2]
+    images: [pointsAppScreen1, pointsAppScreen2],
   },
   {
     name: 'web wallets',
     repo: 'https://github.com/xxfoundation/wallet.xx.network',
     url: 'https://wallet.xx.network/',
-    images: [webWalletScreen1, webWalletScreen2, webWalletScreen3]
+    images: [webWalletScreen1, webWalletScreen2, webWalletScreen3],
   },
   {
     name: 'web messengers',
     repo: 'https://github.com/xxfoundation/haven',
     url: 'https://haven.xx.network/',
-    images: [webMessengerScreen1, webMessengerScreen2, webMessengerScreen3]
+    images: [webMessengerScreen1, webMessengerScreen2, webMessengerScreen3],
   },
   {
     name: 'node operator dashboards',
@@ -95,14 +95,14 @@ const projects: Project[] = [
     images: [
       nodeOperatorDashboardScreen1,
       nodeOperatorDashboardScreen2,
-      nodeOperatorDashboardScreen3
-    ]
-  }
+      nodeOperatorDashboardScreen3,
+    ],
+  },
 ] as const;
 
-const projectNames = projects.map((project) => project.name);
-const projectImages = projects.flatMap((project) =>
-  project.images.map((img) => [project.name, img.src] as const)
+const _projectNames = projects.map(project => project.name);
+const projectImages = projects.flatMap(project =>
+  project.images.map(img => [project.name, img.src] as const)
 );
 
 const allImages = projectImages.map(([, img]) => img);
@@ -119,7 +119,7 @@ interface State {
 }
 
 const initialState: State = {
-  selectedImageIndex: 0
+  selectedImageIndex: 0,
 };
 
 function portfolioReducer(state: State, action: Action): State {
@@ -129,13 +129,13 @@ function portfolioReducer(state: State, action: Action): State {
         if (projectImages[i][0] !== projectImages[state.selectedImageIndex][0]) {
           return {
             ...state,
-            selectedImageIndex: i
+            selectedImageIndex: i,
           };
         }
       }
 
       return {
-        ...state
+        ...state,
       };
     }
     case 'previousProject': {
@@ -143,12 +143,12 @@ function portfolioReducer(state: State, action: Action): State {
         if (projectImages[i][0] !== projectImages[state.selectedImageIndex][0]) {
           return {
             ...state,
-            selectedImageIndex: i
+            selectedImageIndex: i,
           };
         }
       }
       return {
-        ...state
+        ...state,
       };
     }
     case 'nextImage': {
@@ -157,7 +157,7 @@ function portfolioReducer(state: State, action: Action): State {
 
       return {
         ...state,
-        selectedImageIndex: nextIndex
+        selectedImageIndex: nextIndex,
       };
     }
     case 'previousImage': {
@@ -166,13 +166,13 @@ function portfolioReducer(state: State, action: Action): State {
 
       return {
         ...state,
-        selectedImageIndex: previousIndex
+        selectedImageIndex: previousIndex,
       };
     }
     case 'setSelectedImageIndex': {
       return {
         ...state,
-        selectedImageIndex: action.index
+        selectedImageIndex: action.index,
       };
     }
     default:
@@ -183,19 +183,19 @@ function portfolioReducer(state: State, action: Action): State {
 export default function Home() {
   const [state, dispatch] = useReducer(portfolioReducer, initialState);
   const selectedProject = useMemo(
-    () => projects.find((project) => project.name === projectImages[state.selectedImageIndex][0]),
+    () => projects.find(project => project.name === projectImages[state.selectedImageIndex][0]),
     [state.selectedImageIndex]
   );
 
   const [projectsRef, isProjectsVisible] = useIntersectionObserver({
     threshold: 0.1,
     rootMargin: '0px',
-    freezeOnceVisible: true
+    freezeOnceVisible: true,
   });
 
   useImagePreloader({
     enable: isProjectsVisible,
-    images: allImages
+    images: allImages,
   });
 
   return (
@@ -359,14 +359,14 @@ export default function Home() {
         id="projects"
       >
         <h2 className="mb-12 px-3 text-center text-3xl md:text-4xl lg:text-5xl">
-          I've made&nbsp;
+          I&apos;ve made&nbsp;
           <span className="text-primary-400">{selectedProject?.name}</span>
         </h2>
         <div className="relative">
           <ImageCarousel
             images={allImages}
             selectedIndex={state.selectedImageIndex}
-            onIndexChange={(index) => {
+            onIndexChange={index => {
               dispatch({ type: 'setSelectedImageIndex', index });
             }}
             className="w-full max-w-5xl"
@@ -472,8 +472,8 @@ export default function Home() {
               <h4 className="text-2xl">Key Achievements</h4>
               <ol className="list-disc pt-2 pl-5">
                 <li>
-                  Integrated Xave's Balancer V2 based FX Pools to the platform allowing our users to
-                  swap from PHT to USDT/USDC/XSGD with minimal slippage.
+                  Integrated Xave&apos;s Balancer V2 based FX Pools to the platform allowing our
+                  users to swap from PHT to USDT/USDC/XSGD with minimal slippage.
                 </li>
                 <li>
                   Combined all of the repos to a single mono-repo with Turbo which enabled to share
@@ -738,12 +738,12 @@ export default function Home() {
                 </li>
                 <li>
                   Provided 150+ node operators with essential support and comprehensive performance
-                  insights:{' '}
+                  insights:&nbsp;
                   <a href="https://dashboard.xx.network/">https://dashboard.xx.network/</a>
                 </li>
                 <li>
                   Developed software allowing 300+ end-users to interact with the product, enabling
-                  them to utilize the company's financial services:{' '}
+                  them to utilize the company&apos;s financial services:&nbsp;
                   <a href="https://wallet.xx.network/">https://wallet.xx.network/</a>
                 </li>
                 <li>

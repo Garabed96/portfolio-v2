@@ -5,7 +5,7 @@ interface SmartContractIconProps {
 }
 
 export const SmartContractIcon: React.FC<SmartContractIconProps> = ({
-  className = 'fill-[#9c97b4]'
+  className = 'fill-[#9c97b4]',
 }) => {
   return (
     <svg

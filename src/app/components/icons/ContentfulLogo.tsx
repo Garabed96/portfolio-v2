@@ -4,7 +4,9 @@ interface ContentfulLogoProps {
   className?: string;
 }
 
-export const ContentfulLogo: React.FC<ContentfulLogoProps> = ({ className = '-mb-2.5 w-8' }) => {
+export const ContentfulLogo: React.FC<ContentfulLogoProps> = ({
+  className: _className = '-mb-2.5 w-8',
+}) => {
   return (
     <svg
       className="h-5 w-5"

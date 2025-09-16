@@ -5,7 +5,7 @@ interface DatabaseIconProps {
 }
 
 export const DatabaseIcon: React.FC<DatabaseIconProps> = ({
-  className = 'h-12 w-12 fill-yellow-400'
+  className = 'h-12 w-12 fill-yellow-400',
 }) => {
   return (
     <svg
@@ -17,7 +17,7 @@ export const DatabaseIcon: React.FC<DatabaseIconProps> = ({
       x="0px"
       y="0px"
       viewBox="0 0 101.15 122.88"
-      style={{ enableBackground: 'new 0 0 101.15 122.88' } as any}
+      style={{ enableBackground: 'new 0 0 101.15 122.88' } as React.CSSProperties}
       xmlSpace="preserve"
     >
       <title>Database Architecture Icon</title>

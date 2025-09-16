@@ -53,12 +53,12 @@ export default function MouseShadow() {
           autoMoveStartTime.current = Date.now();
           autoMoveStartPosition.current = {
             x: currentPosition.current.x,
-            y: currentPosition.current.y
+            y: currentPosition.current.y,
           };
 
           velocity.current = {
             x: 0.45 * 4,
-            y: 0.45 * 4
+            y: 0.45 * 4,
           };
           setIsAutoMoving(true);
         }, INACTIVITY_DELAY);
@@ -143,7 +143,7 @@ export default function MouseShadow() {
           radial-gradient(circle at 50% 50%, rgba(255, 100, 0, ${INTENSITY}) 0%, transparent 80%)
         `,
         filter: 'blur(100px)',
-        transition: isAutoMoving ? 'none' : 'opacity 0.5s ease, left 0.1s ease, top 0.1s ease'
+        transition: isAutoMoving ? 'none' : 'opacity 0.5s ease, left 0.1s ease, top 0.1s ease',
       }}
     />
   );

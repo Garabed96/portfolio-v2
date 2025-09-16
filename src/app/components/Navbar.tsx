@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useClickOutside from '../hooks/useClickOutside';
 
 const navItems = [
   { id: 'introduction', label: 'About' },
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
-  { id: 'experience', label: 'Experience' }
+  { id: 'experience', label: 'Experience' },
 ];
 
 const Navbar = () => {
@@ -31,15 +31,13 @@ const Navbar = () => {
       // Scroll the snap container to the section
       snapContainer.scrollTo({
         top: element.offsetTop,
-        behavior: 'smooth'
+        behavior: 'smooth',
       });
 
       // Reset scrolling flag after animation completes
       setTimeout(() => {
         setIsScrolling(false);
       }, 1000); // Adjust timing based on your scroll animation
-    } else {
-      console.warn(`Section with id "${sectionId}" or snap container not found`);
     }
     // Close mobile menu when navigating
     setIsMobileMenuOpen(false);
@@ -57,12 +55,11 @@ const Navbar = () => {
     const snapContainer = document.querySelector('.snap-container') as HTMLElement;
 
     if (!snapContainer) {
-      console.warn('Snap container not found');
       return;
     }
 
     const handleScroll = () => {
-      const sections = navItems.map((item) => document.getElementById(item.id)).filter(Boolean);
+      const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
       const scrollPosition = snapContainer.scrollTop + 100; // Add some buffer
 
       let activeId = 'introduction';
@@ -95,12 +92,12 @@ const Navbar = () => {
               onClick={() => scrollToSection('introduction')}
               className="hover:text-primary-400 cursor-pointer text-lg font-medium text-white transition-colors duration-200"
             >
-              Mathieu Bertin's Portfolio
+              Mathieu Bertin&apos;s Portfolio
             </button>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
+              {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
@@ -119,7 +116,7 @@ const Navbar = () => {
           <div className="md:hidden">
             <button
               className="hover:text-primary-400 cursor-pointer text-white transition-colors duration-200"
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+              onClick={() => setIsMobileMenuOpen(prev => !prev)}
             >
               {isMobileMenuOpen ? (
                 <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -147,7 +144,7 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="w-full space-y-1 bg-black/20 px-2 pt-2 pb-3 backdrop-blur-md sm:px-3">
-              {navItems.map((item) => (
+              {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
