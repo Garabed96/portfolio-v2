@@ -87,6 +87,15 @@ pre,
   letter-spacing: -0.02em;
 }
 
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

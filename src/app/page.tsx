@@ -1,9 +1,11 @@
 'use client';
 
-import { useReducer, useState } from 'react';
+import { useMemo, useReducer, useState } from 'react';
 import MouseShadow from './components/MouseShadow';
 import Navbar from './components/Navbar';
+import ImageCarousel from './components/ImageCarousel';
 import { useImagePreloader } from './hooks/useImagePreloader';
+import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import {
   GithubIcon,
   LinkedinIcon,
@@ -42,6 +44,7 @@ import { ChevronFirst, ChevronLast, ChevronLeft, ChevronRight, ExternalLink } fr
 import { cn } from '@/utils';
 import { StaticImageData } from 'next/image';
 import Image from 'next/image';
+import { JsIcon } from './components/icons/JsIcon';
 
 type Project = {
   name: string;
@@ -92,91 +95,79 @@ const projects: Project[] = [
   }
 ] as const;
 
-// Action types
+const projectNames = projects.map((project) => project.name);
+const projectImages = projects.flatMap((project) =>
+  project.images.map((img) => [project.name, img.src] as const)
+);
+
+const allImages = projectImages.map(([, img]) => img);
+
 type Action =
   | { type: 'nextProject' }
   | { type: 'previousProject' }
   | { type: 'nextImage' }
-  | { type: 'previousImage' };
+  | { type: 'previousImage' }
+  | { type: 'setSelectedImageIndex'; index: number };
 
-// State type
 interface State {
-  selectedProject: (typeof projects)[number];
-  selectedImage: number;
-  hasNextImage: boolean;
-  hasPreviousImage: boolean;
+  selectedImageIndex: number;
 }
 
-// Initial state
 const initialState: State = {
-  selectedProject: projects[0],
-  selectedImage: 0,
-  hasNextImage: projects[0].images.length > 1,
-  hasPreviousImage: false
+  selectedImageIndex: 0
 };
 
 function portfolioReducer(state: State, action: Action): State {
   switch (action.type) {
     case 'nextProject': {
-      const currentIndex = projects.findIndex(
-        (project) => project.name === state.selectedProject.name
-      );
-      const nextIndex = currentIndex + 1 === projects.length ? 0 : currentIndex + 1;
-      const nextProject = projects[nextIndex];
+      for (let i = state.selectedImageIndex; i < projectImages.length; i++) {
+        if (projectImages[i][0] !== projectImages[state.selectedImageIndex][0]) {
+          return {
+            ...state,
+            selectedImageIndex: i
+          };
+        }
+      }
+
       return {
-        ...state,
-        selectedProject: nextProject,
-        selectedImage: 0,
-        hasNextImage: nextProject.images.length > 1,
-        hasPreviousImage: false
+        ...state
       };
     }
     case 'previousProject': {
-      const currentIndex = projects.findIndex(
-        (project) => project.name === state.selectedProject.name
-      );
-      const prevIndex = currentIndex - 1 < 0 ? projects.length - 1 : currentIndex - 1;
-      const prevProject = projects[prevIndex];
+      for (let i = state.selectedImageIndex - 1; i >= 0; i--) {
+        if (projectImages[i][0] !== projectImages[state.selectedImageIndex][0]) {
+          return {
+            ...state,
+            selectedImageIndex: i
+          };
+        }
+      }
       return {
-        ...state,
-        selectedProject: prevProject,
-        selectedImage: 0,
-        hasNextImage: prevProject.images.length > 1,
-        hasPreviousImage: false
+        ...state
       };
     }
     case 'nextImage': {
-      const newImageIndex = state.selectedImage + 1;
-      const hasNext = newImageIndex < state.selectedProject.images.length - 1;
-      const hasPrevious = newImageIndex > 0;
-
-      // Don't allow going beyond the last image
-      if (newImageIndex >= state.selectedProject.images.length) {
-        return state;
-      }
+      const nextIndex =
+        state.selectedImageIndex + 1 < projectImages.length ? state.selectedImageIndex + 1 : 0;
 
       return {
         ...state,
-        selectedImage: newImageIndex,
-        hasNextImage: hasNext,
-        hasPreviousImage: hasPrevious
+        selectedImageIndex: nextIndex
       };
     }
     case 'previousImage': {
-      const newImageIndex = state.selectedImage - 1;
-      const hasNext = newImageIndex < state.selectedProject.images.length - 1;
-      const hasPrevious = newImageIndex > 0;
-
-      // Don't allow going below the first image
-      if (newImageIndex < 0) {
-        return state;
-      }
+      const previousIndex =
+        state.selectedImageIndex - 1 >= 0 ? state.selectedImageIndex - 1 : projectImages.length - 1;
 
       return {
         ...state,
-        selectedImage: newImageIndex,
-        hasNextImage: hasNext,
-        hasPreviousImage: hasPrevious
+        selectedImageIndex: previousIndex
+      };
+    }
+    case 'setSelectedImageIndex': {
+      return {
+        ...state,
+        selectedImageIndex: action.index
       };
     }
     default:
@@ -186,80 +177,21 @@ function portfolioReducer(state: State, action: Action): State {
 
 export default function Home() {
   const [state, dispatch] = useReducer(portfolioReducer, initialState);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const selectedProject = useMemo(
+    () => projects.find((project) => project.name === projectImages[state.selectedImageIndex][0]),
+    [state.selectedImageIndex]
+  );
 
-  // Preload next images for better performance
-  useImagePreloader({
-    images: state.selectedProject.images.map((img) => img.src),
-    preloadNext: true,
-    currentIndex: state.selectedImage
+  const [projectsRef, isProjectsVisible] = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '0px',
+    freezeOnceVisible: true
   });
 
-  const handleNextProject = () => {
-    dispatch({ type: 'nextProject' });
-  };
-
-  const handlePreviousProject = () => {
-    dispatch({ type: 'previousProject' });
-  };
-
-  const handleNextImage = () => {
-    if (state.hasNextImage) {
-      dispatch({ type: 'nextImage' });
-    } else {
-      // If no next image, go to next project
-      handleNextProject();
-    }
-  };
-
-  const handlePreviousImage = () => {
-    dispatch({ type: 'previousImage' });
-  };
-
-  // Touch event handlers for mobile gestures
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > 50;
-    const isRightSwipe = distance < -50;
-
-    if (isLeftSwipe) {
-      // Swipe left - go to next project
-      handleNextProject();
-    } else if (isRightSwipe) {
-      // Swipe right - go to previous project
-      handlePreviousProject();
-    }
-  };
-
-  // Tap handler for next image
-  const handleImageTap = (e: React.MouseEvent) => {
-    // Only handle tap if it's not on a button
-    if ((e.target as HTMLElement).closest('button')) {
-      return;
-    }
-
-    // Check if we're on mobile (screen width < 768px)
-    if (window.innerWidth < 768) {
-      if (state.hasNextImage) {
-        handleNextImage();
-      } else {
-        // If no next image, go to next project
-        handleNextProject();
-      }
-    }
-  };
+  useImagePreloader({
+    enable: isProjectsVisible,
+    images: allImages
+  });
 
   return (
     <main className="snap-container">
@@ -416,185 +348,47 @@ export default function Home() {
           </li>
         </ol>
       </section>
-      <section className="main-section flex flex-col items-center justify-center" id="projects">
+      <section
+        ref={projectsRef}
+        className="main-section flex flex-col items-center justify-center py-16"
+        id="projects"
+      >
         <h2 className="mb-12 px-3 text-center text-3xl md:text-4xl lg:text-5xl">
           I've made&nbsp;
-          {projects.map((project) => (
-            <span
-              key={project.name}
-              className={
-                project.name === state.selectedProject.name ? 'text-primary-400' : 'hidden'
-              }
-            >
-              {project.name}
-            </span>
-          ))}
-          .
+          <span className="text-primary-400">{selectedProject?.name}</span>
         </h2>
         <div className="relative">
-          <div className="hidden md:flex">
-            <button className="text-primary-400 cursor-pointer" onClick={handlePreviousProject}>
-              <ChevronFirst className="size-16" />
-            </button>
-            <button
-              className={cn(
-                'cursor-pointer',
-                state.hasPreviousImage ? 'text-primary-400' : 'cursor-not-allowed text-gray-500'
-              )}
-              onClick={handlePreviousImage}
-              disabled={!state.hasPreviousImage}
-            >
-              <ChevronLeft className="size-16" />
-            </button>
-            <div className="relative grow">
-              {(() => {
-                const currentProject = projects.find(
-                  (project) => project.name === state.selectedProject.name
-                );
-                if (currentProject && 'images' in currentProject && currentProject.images) {
-                  return (
-                    <>
-                      <Image
-                        src={currentProject.images[state.selectedImage]}
-                        alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
-                        className="w-full max-w-5xl drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
-                        priority={state.selectedImage === 0}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                        quality={90}
-                        width={1200}
-                        height={800}
-                      />
-                      {/* Overlay icons in bottom right */}
-                      <div className="absolute right-4 bottom-4 flex gap-2">
-                        {currentProject.repo && (
-                          <a
-                            href={currentProject.repo}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
-                            title="View on GitHub"
-                          >
-                            <GithubIcon className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
-                          </a>
-                        )}
-                        {currentProject.url && (
-                          <a
-                            href={currentProject.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
-                            title="Visit website"
-                          >
-                            <ExternalLink className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
-                          </a>
-                        )}
-                      </div>
-                    </>
-                  );
-                }
-                return <div className="aspect-square">No image available</div>;
-              })()}
-            </div>
-            <button className="text-primary-400 cursor-pointer" onClick={handleNextImage}>
-              <ChevronRight className="size-16" />
-            </button>
-            <button className="text-primary-400 cursor-pointer" onClick={handleNextProject}>
-              <ChevronLast className="size-16" />
-            </button>
-          </div>
-
-          {/* Mobile layout - buttons overlaid on image */}
-          <div
-            className="relative md:hidden"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            onClick={handleImageTap}
-          >
-            {(() => {
-              const currentProject = projects.find(
-                (project) => project.name === state.selectedProject.name
-              );
-              if (currentProject && 'images' in currentProject && currentProject.images) {
-                return (
-                  <>
-                    <Image
-                      src={currentProject.images[state.selectedImage]}
-                      alt={`${currentProject.name} screenshot ${state.selectedImage + 1}`}
-                      className="w-full drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
-                      priority={state.selectedImage === 0}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                      quality={90}
-                      width={1200}
-                      height={800}
-                    />
-                    {/* Overlay icons in bottom right */}
-                    <div className="absolute right-4 bottom-4 flex gap-2">
-                      {currentProject.repo && (
-                        <a
-                          href={currentProject.repo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
-                          title="View on GitHub"
-                        >
-                          <GithubIcon className="text-primary-400 h-8 w-8 drop-shadow-lg" />
-                        </a>
-                      )}
-                      {currentProject.url && (
-                        <a
-                          href={currentProject.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg bg-black/70 p-2 text-white transition-colors hover:bg-black/90"
-                          title="Visit website"
-                        >
-                          <ExternalLink className="text-primary-400 h-8 w-8 drop-shadow-lg" />
-                        </a>
-                      )}
-                    </div>
-                    {/* Mobile navigation buttons overlaid on image */}
-                    <div className="absolute top-1/2 right-0 left-0 flex items-center justify-between px-2">
-                      <div className="flex gap-2">
-                        <button
-                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
-                          onClick={handlePreviousProject}
-                        >
-                          <ChevronFirst className="size-8" />
-                        </button>
-                        <button
-                          className={cn(
-                            'cursor-pointer rounded-full bg-black/30 p-2',
-                            state.hasPreviousImage
-                              ? 'text-primary-400'
-                              : 'cursor-not-allowed text-gray-500'
-                          )}
-                          onClick={handlePreviousImage}
-                          disabled={!state.hasPreviousImage}
-                        >
-                          <ChevronLeft className="size-8" />
-                        </button>
-                      </div>
-                      <div className="flex gap-2">
-                        <button
-                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
-                          onClick={handleNextImage}
-                        >
-                          <ChevronRight className="size-8" />
-                        </button>
-                        <button
-                          className="text-primary-400 cursor-pointer rounded-full bg-black/30 p-2"
-                          onClick={handleNextProject}
-                        >
-                          <ChevronLast className="size-8" />
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                );
-              }
-              return <div className="aspect-square w-full">No image available</div>;
-            })()}
+          <ImageCarousel
+            images={allImages}
+            selectedIndex={state.selectedImageIndex}
+            onIndexChange={(index) => {
+              dispatch({ type: 'setSelectedImageIndex', index });
+            }}
+            className="w-full max-w-5xl"
+          />
+          <div className="absolute right-6 bottom-12 flex gap-2">
+            {selectedProject?.repo && (
+              <a
+                href={selectedProject.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-black/60 p-2 text-white transition-colors hover:bg-black/90"
+                title="View on GitHub"
+              >
+                <GithubIcon className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
+              </a>
+            )}
+            {selectedProject?.url && (
+              <a
+                href={selectedProject.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-black/60 p-2 text-white transition-colors hover:bg-black/90"
+                title="Visit website"
+              >
+                <ExternalLink className="text-primary-400 h-10 w-10 drop-shadow-lg lg:h-12 lg:w-12" />
+              </a>
+            )}
           </div>
         </div>
         <p className="text-primary-400/75 mt-5 max-w-xl text-center text-sm">
@@ -1214,83 +1008,15 @@ export default function Home() {
                   <span>Typescript</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="w-5"
-                    viewBox="0 0 256 256"
-                    xmlns="http://www.w3.org/2000/svg"
-                    preserveAspectRatio="xMinYMin meet"
-                  >
-                    <path d="M0 0h256v256H0V0z" fill="#F7DF1E" />
-                    <path d="M67.312 213.932l19.59-11.856c3.78 6.701 7.218 12.371 15.465 12.371 7.905 0 12.89-3.092 12.89-15.12v-81.798h24.057v82.138c0 24.917-14.606 36.259-35.916 36.259-19.245 0-30.416-9.967-36.087-21.996M152.381 211.354l19.588-11.341c5.157 8.421 11.859 14.607 23.715 14.607 9.969 0 16.325-4.984 16.325-11.858 0-8.248-6.53-11.17-17.528-15.98l-6.013-2.58c-17.357-7.387-28.87-16.667-28.87-36.257 0-18.044 13.747-31.792 35.228-31.792 15.294 0 26.292 5.328 34.196 19.247L210.29 147.43c-4.125-7.389-8.591-10.31-15.465-10.31-7.046 0-11.514 4.468-11.514 10.31 0 7.217 4.468 10.14 14.778 14.608l6.014 2.577c20.45 8.765 31.963 17.7 31.963 37.804 0 21.654-17.012 33.51-39.867 33.51-22.339 0-36.774-10.654-43.819-24.574" />
-                  </svg>
+                  <JsIcon />
                   <span>Javascript</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <svg className="inline" viewBox="0 0 180 180" width="18">
-                    <mask
-                      height="180"
-                      id=":r8:mask0_408_134"
-                      maskUnits="userSpaceOnUse"
-                      width="180"
-                      x="0"
-                      y="0"
-                      style={{ maskType: 'alpha' }}
-                    >
-                      <circle cx="90" cy="90" fill="black" r="90"></circle>
-                    </mask>
-                    <g mask="url(#:r8:mask0_408_134)">
-                      <circle cx="90" cy="90" data-circle="true" fill="black" r="90"></circle>
-                      <path
-                        d="M149.508 157.52L69.142 54H54V125.97H66.1136V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z"
-                        fill="url(#:r8:paint0_linear_408_134)"
-                      ></path>
-                      <rect
-                        fill="url(#:r8:paint1_linear_408_134)"
-                        height="72"
-                        width="12"
-                        x="115"
-                        y="54"
-                      ></rect>
-                    </g>
-                    <defs>
-                      <linearGradient
-                        gradientUnits="userSpaceOnUse"
-                        id=":r8:paint0_linear_408_134"
-                        x1="109"
-                        x2="144.5"
-                        y1="116.5"
-                        y2="160.5"
-                      >
-                        <stop stopColor="white"></stop>
-                        <stop offset="1" stopColor="white" stopOpacity="0"></stop>
-                      </linearGradient>
-                      <linearGradient
-                        gradientUnits="userSpaceOnUse"
-                        id=":r8:paint1_linear_408_134"
-                        x1="121"
-                        x2="120.799"
-                        y1="54"
-                        y2="106.875"
-                      >
-                        <stop stopColor="white"></stop>
-                        <stop offset="1" stopColor="white" stopOpacity="0"></stop>
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                  <NextjsIcon />
                   <span>Nextjs</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="w-6"
-                    viewBox="0 0 512 512"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M281.44 397.667H438.32C443.326 397.667 448.118 395.908 452.453 393.427C456.789 390.946 461.258 387.831 463.76 383.533C466.262 379.236 468.002 374.36 468 369.399C467.998 364.437 466.266 359.563 463.76 355.268L357.76 172.947C355.258 168.65 352.201 165.534 347.867 163.053C343.532 160.573 337.325 158.813 332.32 158.813C327.315 158.813 322.521 160.573 318.187 163.053C313.852 165.534 310.795 168.65 308.293 172.947L281.44 219.587L227.733 129.13C225.229 124.834 222.176 120.307 217.84 117.827C213.504 115.346 208.713 115 203.707 115C198.701 115 193.909 115.346 189.573 117.827C185.238 120.307 180.771 124.834 178.267 129.13L46.8267 355.268C44.3208 359.563 44.0022 364.437 44 369.399C43.9978 374.36 44.3246 379.235 46.8267 383.533C49.3288 387.83 53.7979 390.946 58.1333 393.427C62.4688 395.908 67.2603 397.667 72.2667 397.667H171.2C210.401 397.667 238.934 380.082 258.827 346.787L306.88 263.4L332.32 219.587L410.053 352.44H306.88L281.44 397.667ZM169.787 352.44H100.533L203.707 174.36L256 263.4L221.361 323.784C208.151 345.387 193.089 352.44 169.787 352.44Z"
-                      fill="#00DC82"
-                    />
-                  </svg>
+                  <NuxtjsIcon />
                   <span>Nuxtjs</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
