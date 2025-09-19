@@ -9,7 +9,6 @@ import {
   HardhatIcon,
   GithubIcon,
   LinkedinIcon,
-  DocxIcon,
   PdfIcon,
   TypeScriptIcon,
   SolidityIcon,
@@ -25,6 +24,7 @@ import {
   AwsIcon,
   VercelIcon,
   GraphQLIcon as _GraphQLIcon,
+  DjangoIcon,
 } from './components/icons';
 import pointsAppScreen1 from './assets/points-app-screen-1.png';
 import pointsAppScreen2 from './assets/points-app-screen-2.png';
@@ -198,13 +198,13 @@ export default function Home() {
           <div className="absolute top-0 z-10 h-full w-full backdrop-brightness-50" />
           <div className="relative z-10 h-full w-full p-5 md:p-12 lg:p-32">
             <div className="container mx-auto max-w-6xl space-y-5">
-              <h1 className="text-4xl leading-none md:text-5xl xl:text-6xl">Mathieu Bertin</h1>
+              <h1 className="text-4xl leading-none md:text-5xl xl:text-6xl">Garo Nazarian</h1>
               <div>
                 <h2 className="text-primary-400 mb-8 text-4xl leading-none md:text-5xl xl:text-6xl">
                   Full Stack Developer
                 </h2>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
-                  with 10+ years of development experience and exactly 0 professional design
+                  with 7+ years of development experience and exactly 0 professional design
                   experience.
                 </p>
               </div>
@@ -213,7 +213,7 @@ export default function Home() {
                   <a
                     rel="noopener"
                     className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
-                    href="https://github.com/burtonium/"
+                    href="https://github.com/Garabed96"
                   >
                     <GithubIcon />
                     <span>Github</span>
@@ -223,23 +223,23 @@ export default function Home() {
                   <a
                     rel="noopener"
                     className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
-                    href="https://www.linkedin.com/in/mathieu-bertin"
+                    href="https://www.linkedin.com/in/garo-nazarian/"
                   >
                     <LinkedinIcon />
                     <span>LinkedIn</span>
                   </a>
                 </li>
-                <li className="flex items-center space-x-1">
-                  <form method="get" action="Resume.docx">
-                    <button
-                      className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"
-                      type="submit"
-                    >
-                      <DocxIcon />
-                      <span>Docx Resume</span>
-                    </button>
-                  </form>
-                </li>
+                {/*<li className="flex items-center space-x-1">*/}
+                {/*  <form method="get" action="Resume.docx">*/}
+                {/*    <button*/}
+                {/*      className="hover:text-primary-400 flex cursor-pointer items-center space-x-1"*/}
+                {/*      type="submit"*/}
+                {/*    >*/}
+                {/*      <DocxIcon />*/}
+                {/*      <span>Docx Resume</span>*/}
+                {/*    </button>*/}
+                {/*  </form>*/}
+                {/*</li>*/}
                 <li className="flex items-center space-x-1">
                   <form method="get" action="Resume.pdf">
                     <button
@@ -282,8 +282,8 @@ export default function Home() {
                     <span>React</span>
                   </li>
                   <li className="flex items-center space-x-1">
-                    <NuxtjsIcon />
-                    <span>Nuxtjs</span>
+                    <DjangoIcon />
+                    <span></span>
                   </li>
 
                   <li className="flex items-center space-x-1">

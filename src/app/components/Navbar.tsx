@@ -92,7 +92,7 @@ const Navbar = () => {
               onClick={() => scrollToSection('introduction')}
               className="hover:text-primary-400 cursor-pointer text-lg font-medium text-white transition-colors duration-200"
             >
-              Mathieu Bertin&apos;s Portfolio
+              Garo Nazarian&apos;s Portfolio
             </button>
           </div>
           <div className="hidden md:block">

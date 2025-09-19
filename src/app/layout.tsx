@@ -11,13 +11,13 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
-    template: '%s | Mathieu Bertin - Full Stack Developer',
+    default: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
+    template: '%s | Garo Nazarian - Full Stack Developer',
   },
   description:
-    'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies. Available for consulting and development projects.',
+    'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies. Available for consulting and development projects.',
   keywords: [
-    'Mathieu Bertin',
+    'Garo Nazarian',
     'Full Stack Developer',
     'Web3 Developer',
     'Blockchain Developer',
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     'Balthazar DAO',
     'xx network',
   ],
-  authors: [{ name: 'Mathieu Bertin', url: 'https://github.com/burtonium' }],
-  creator: 'Mathieu Bertin',
-  publisher: 'Mathieu Bertin',
+  authors: [{ name: 'Garo Nazarian', url: 'https://github.com/burtonium' }],
+  creator: 'Garo Nazarian',
+  publisher: 'Garo Nazarian',
   formatDetection: {
     email: false,
     address: false,
@@ -49,16 +49,16 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://portfolio.nephelo.io',
-    siteName: 'Mathieu Bertin - Full Stack Developer',
-    title: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
+    siteName: 'Garo Nazarian - Full Stack Developer',
+    title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
+      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
     // images: [
     //   {
     //     url: '/profile.jpg',
     //     width: 1200,
     //     height: 630,
-    //     alt: 'Mathieu Bertin - Full Stack Developer',
+    //     alt: 'Garo Nazarian - Full Stack Developer',
     //     type: 'image/jpeg'
     //   }
     // ]
@@ -67,9 +67,9 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@matt_burton',
     creator: '@matt_burton',
-    title: 'Mathieu Bertin - Full Stack Developer | Web3 & Blockchain Expert',
+    title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
+      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
     // images: ['/profile.jpg']
   },
   robots: {
@@ -115,10 +115,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Mathieu Bertin',
+              name: 'Garo Nazarian',
               jobTitle: 'Full Stack Developer',
               description:
-                'Full Stack Developer with 10+ years of experience specializing in web3 and blockchain applications',
+                'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications',
               url: 'https://portfolio.nephelo.io',
               sameAs: [
                 'https://github.com/burtonium',

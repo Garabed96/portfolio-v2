@@ -1,4 +1,5 @@
 export { GithubIcon } from './GithubIcon';
+export { DjangoIcon } from './DjangoIcon';
 export { LinkedinIcon } from './LinkedinIcon';
 export { DocxIcon } from './DocxIcon';
 export { PdfIcon } from './PdfIcon';
