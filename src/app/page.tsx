@@ -283,7 +283,7 @@ export default function Home() {
                   </li>
                   <li className="flex items-center space-x-1">
                     <DjangoIcon />
-                    <span></span>
+                    <span>Django</span>
                   </li>
 
                   <li className="flex items-center space-x-1">
