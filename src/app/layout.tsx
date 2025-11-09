@@ -11,11 +11,11 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
+    default: 'Garo Nazarian - Full Stack Developer | Web3 & Cloud Expert',
     template: '%s | Garo Nazarian - Full Stack Developer',
   },
   description:
-    'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies. Available for consulting and development projects.',
+    'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and cloud architecture. Available for consulting and development projects.',
   keywords: [
     'Garo Nazarian',
     'Full Stack Developer',
@@ -26,12 +26,11 @@ export const metadata: Metadata = {
     'Node.js',
     'Smart Contracts',
     'DApp Development',
+    'Cloud Architecture',
     'Frontend Developer',
     'Backend Developer',
     'Software Engineer',
     'Portfolio',
-    'Balthazar DAO',
-    'xx network',
   ],
   authors: [{ name: 'Garo Nazarian', url: 'https://github.com/burtonium' }],
   creator: 'Garo Nazarian',
@@ -121,8 +120,8 @@ export default function RootLayout({
                 'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications',
               url: 'https://portfolio.nephelo.io',
               sameAs: [
-                'https://github.com/burtonium',
-                'https://www.linkedin.com/in/mathieu-bertin',
+                'https://github.com/Garabed96',
+                'https://www.linkedin.com/in/garo-nazarian/',
               ],
               knowsAbout: [
                 'Web3 Development',

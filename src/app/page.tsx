@@ -23,6 +23,7 @@ import {
   BackendSystemsIcon,
   AwsIcon,
   VercelIcon,
+  TanstackQueryIcon,
   GraphQLIcon as _GraphQLIcon,
   DjangoIcon,
 } from './components/icons';
@@ -43,7 +44,7 @@ import tokenDashboardScreen1 from './assets/token-dashboard-screen-1.png';
 import tokenDashboardScreen2 from './assets/token-dashboard-screen-2.png';
 import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
 
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, TrendingUp } from 'lucide-react';
 import { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import { JsIcon } from './components/icons/JsIcon';
@@ -201,11 +202,11 @@ export default function Home() {
               <h1 className="text-4xl leading-none md:text-5xl xl:text-6xl">Garo Nazarian</h1>
               <div>
                 <h2 className="text-primary-400 mb-8 text-4xl leading-none md:text-5xl xl:text-6xl">
-                  Full Stack Developer
+                  Full-Stack Developer | Cloud Architecture & AWS
                 </h2>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
-                  with 7+ years of development experience and exactly 0 professional design
-                  experience.
+                  6+ years of developing scalable systems from the ground up, with absolutely no
+                  interest in UI/UX design.
                 </p>
               </div>
               <ol className="mt-5 space-y-2 lg:flex lg:space-y-0 lg:space-x-5 lg:text-lg">
@@ -261,6 +262,9 @@ export default function Home() {
                     <TypeScriptIcon />
                     <span>Typescript</span>
                   </li>
+                  <li className="flex items-center space-x-1">
+                    <TanstackQueryIcon />
+                  </li>
                   <li className="flex items-center">
                     <SolidityIcon />
                     <span>Solidity</span>
@@ -287,8 +291,8 @@ export default function Home() {
                   </li>
 
                   <li className="flex items-center space-x-1">
-                    <VuejsIcon />
-                    <span>Vuejs</span>
+                    <AwsIcon />
+                    <span>AWS</span>
                   </li>
 
                   <li className="flex items-center space-x-1">
@@ -305,13 +309,12 @@ export default function Home() {
         className="main-section flex flex-col items-center justify-center space-y-10 px-4 py-16 text-center md:px-8 md:py-20 lg:px-12 lg:py-24"
       >
         <div className="flex flex-col gap-1 md:gap-2">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl">I make web3/blockchain</h2>
-          <h2 className="text-primary-400 text-5xl md:text-6xl lg:text-7xl">web applications</h2>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl">entirely from scratch.</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl">I build scalable</h2>
+          <h2 className="text-primary-400 text-5xl md:text-6xl lg:text-7xl">software</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl">from the ground up.</h2>
         </div>
         <p className="text-base md:text-lg lg:text-xl">
-          Meaning I can provide value at <strong>every level</strong> of making a web application
-          for your web3/blockchain business.
+          Meaning I can provide value at <strong>every level</strong> of developing robust and efficient applications for your business.
         </p>
         <ol className="grid max-w-6xl grid-cols-1 gap-5 py-5 text-left lg:grid-cols-2">
           <li className="frosted-glass-dark flex items-center space-x-4 rounded-xl p-5">
@@ -322,21 +325,21 @@ export default function Home() {
           </li>
           <li className="frosted-glass-dark flex items-center space-x-4 rounded-xl p-5">
             <div className="flex h-16 w-16 items-center justify-center rounded-lg">
-              <SmartContractIcon />
+              <AwsIcon />
             </div>
-            <p>Smart Contract auditing, development and deployment.</p>
+            <p>Cloud Architecture and Development on AWS.</p>
           </li>
           <li className="frosted-glass-dark flex items-center space-x-4 rounded-xl p-5">
             <div className="flex h-16 w-16 items-center justify-center rounded-lg">
               <BackendSystemsIcon />
             </div>
-            <p>Developing backend services or designing intuitive RESTful APIs.</p>
+            <p>Developing resilient backend services and designing intuitive RESTful APIs.</p>
           </li>
           <li className="frosted-glass-dark flex items-center space-x-4 rounded-xl p-5">
             <div className="flex h-16 w-16 items-center justify-center rounded-lg">
-              <ReactIcon className="h-12 w-12" />
+              <TrendingUp className="h-12 w-12" />
             </div>
-            <p>Building beautiful, responsive, and performant frontends.</p>
+            <p>Optimizing application performance and scalability.</p>
           </li>
         </ol>
       </section>
@@ -400,8 +403,8 @@ export default function Home() {
                 Senior Full Stack Web3 Developer
               </h3>
               <p>
-                <span className="font-bold text-white">APACX · Remote</span>&nbsp;
-                <span className="mb-4 text-gray-300">[June 2025 – Current]</span>
+                <span className="font-bold text-white">HAMZA · Remote</span>&nbsp;
+                <span className="mb-4 text-gray-300">[January 2024 – Current]</span>
               </p>
             </div>
 
@@ -421,6 +424,9 @@ export default function Home() {
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <HardhatIcon />
+                </li>
+                <li className="m-2 flex items-center space-x-1">
+                  <TanstackQueryIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <NextjsIcon />
@@ -446,7 +452,7 @@ export default function Home() {
                   <AwsIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <VercelIcon />
+                  MedusaJS
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <SolidityIcon />
@@ -458,22 +464,22 @@ export default function Home() {
               <h4 className="text-2xl">Key Achievements</h4>
               <ol className="list-disc pt-2 pl-5">
                 <li>
-                  Integrated Xave&apos;s Balancer V2 based FX Pools to the platform allowing our
-                  users to swap from PHT to USDT/USDC/XSGD with minimal slippage.
+                  Contributed to the accelerated launch of an e-commerce platform using MedusaJS, which secured over 1000
+                  customers in its initial three months of operation.
                 </li>
                 <li>
-                  Combined all of the repos to a single mono-repo with Turbo which enabled to share
-                  a lot of components and configuration, cutting down on a lot of duplication and
-                  dev time on maintenance.
+                  Architected and led the development of a feature-rich Admin Portal using the full Tanstack Suite (Router, Query,
+                  Form, Table) with Zod for type-safe form validation, establishing a team-wide SOP that accelerated future
+                  development.
                 </li>
                 <li>
-                  Opted for Dune.com instead of Subgraph which led to finishing our analytics and
-                  transparency page in 2 weeks when the latter was already on track to taking a
-                  month+.
+                  Collaborated closely with vendor owners to understand business requirements, and development sprint roadmaps,
+                  ensuring alignment between stakeholder expectations and technical delivery.
                 </li>
                 <li>
-                  Immediately pushed for linting and formatting with prettier before commit with
-                  Husky leading to cleaner more maintainable code.
+                  Implemented Chainlink Price feeds to display product prices in cryptocurrencies (USDT, ETH, USDC), enabling
+                  real-time decentralized price conversions in the marketplace, utilized in currency changers, and developed customer
+                  settings to enhance personalization.
                 </li>
               </ol>
             </div>
@@ -481,11 +487,11 @@ export default function Home() {
           <div className="frosted-glass-dark space-y-4 p-5">
             <div>
               <h3 className="mb-2 text-2xl leading-tight md:text-3xl lg:text-4xl">
-                Senior Full Stack React/Web3 Developer
+                Senior Full Stack Developer
               </h3>
               <p>
-                <span className="font-bold text-white">Balthazar DAO · Full-time</span>&nbsp;
-                <span className="mb-4 text-gray-300">[May 2024 - Present]</span>
+                <span className="font-bold text-white">Contract Developer · Full-time</span>&nbsp;
+                <span className="mb-4 text-gray-300">Sep 2022 - Dec 2023]</span>
               </p>
             </div>
 
@@ -502,9 +508,6 @@ export default function Home() {
                     unoptimized
                   />
                   <span>Typescript</span>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <HardhatIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <svg className="inline" viewBox="0 0 180 180" width="18">
@@ -583,8 +586,8 @@ export default function Home() {
                   <VercelIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <SolidityIcon />
-                  <span>Solidity</span>
+                  <DjangoIcon />
+                  <span>Django</span>
                 </li>
               </ol>
             </div>
@@ -592,24 +595,29 @@ export default function Home() {
               <h4 className="mb-0 text-lg md:text-xl">Responsibilities</h4>
               <ol className="list-disc pt-2 pl-5">
                 <li>
-                  Established immediately as a senior developer, acting as the main PR reviewer
-                  ensuring code quality for the entire organization.
+                  Developed and maintained a Nextjs support website for a Web3 company OrdKit, enabling customers to submit
+                  tickets and employees to efficiently approve refunds for incorrect payments, saving the customer support team time
+                  and increasing customer satisfaction. Utilizing Next13 SSR and Supabase for role based authentication.
                 </li>
                 <li>
-                  Wrote the frontend for our rewards platform from scratch and chose a Next.js,
-                  Tailwind, shadcn, wagmi, tanstack/query tech stack.
+                  Developed a Vite PWA for improved performance and 90 and above grading on all lighthouse metrics for
+                  TuffDAO. The simple application boasted seamless animations and was built using React hooks, Framer,
+                  Blurhash, and Node.js (SMTP for contact).
                 </li>
                 <li>
-                  Wrote, reviewed, and deployed solidity smart contracts for staking, governance,
-                  and vesting functionalities.
+                  Prototyped a cross-platform Health Food Logging and Meditation App SumPlus in React Native, collaborating
+                  with UI/UX designers and developers; integrated USDA FoodData API for nutrition data, and implemented
+                  features including fasting timer, calendar, and meditation timer, with state management via Redux Toolkit and
+                  RTK Query for caching.
                 </li>
                 <li>
-                  Integrated these contracts with the frontend using viem, wagmi, and dynamic.xyz.
+                  Configured and automated CI pipeline with GitHub Actions for SumPlus to enforce code quality through
+                  linting, unit testing (Jest), and build verification.
                 </li>
                 <li>
-                  Identified bottlenecks that could be solved with advanced blockchain indexing
-                  tools such as TheGraph, Dune.com, Goldsky, and Subsquid, eventually deciding on
-                  the latter.
+                  Stabilized the production AWS EC2 environment for an AQI monitoring client, AirDeveloppa, by architecting a
+                  monitoring solution with AWS CloudWatch. Diagnosed and resolved critical Nginx configuration errors and
+                  persistent CPU throttling to ensure high uptime.
                 </li>
               </ol>
             </div>
@@ -620,17 +628,17 @@ export default function Home() {
                 Full Stack Web Developer
               </h3>
               <p>
-                <span className="font-bold text-white">xx network · Full-time</span>
+                <span className="font-bold text-white">Inclusive Media Design Centre · Full-time</span>
                 &nbsp;
-                <span className="mb-4 text-gray-300">[Apr 2019 - Aug 2023]</span>
+                <span className="mb-4 text-gray-300">[Sep 2018 - Sep 2022]</span>
               </p>
-              <p>The first and only quantum-resistant and privacy-focused blockchain ecosystem.</p>
+              {/*<p>The first and only quantum-resistant and privacy-focused blockchain ecosystem.</p>*/}
             </div>
             <div>
               <h4 className="text-lg md:text-xl">Urls</h4>
               <ul>
                 <li>
-                  Website: <a href="https://xx.network">https://xx.network</a>
+                  Website: <a href="https://www.torontomu.ca/inclusive-media/">https://www.torontomu.ca/inclusive-media/</a>
                 </li>
               </ul>
             </div>
@@ -657,8 +665,8 @@ export default function Home() {
                   <span>Nextjs</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <NuxtjsIcon />
-                  <span>Nuxtjs</span>
+                  <DjangoIcon />
+                  <span>Django</span>
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <a href="https://www.postgresql.org/">
@@ -677,67 +685,38 @@ export default function Home() {
                   <TailwindcssIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
-                  <ContentfulLogo />
-                  <span>Contentful</span>
-                </li>
-                <li className="m-2 flex items-center space-x-1">
                   <AwsIcon />
                 </li>
                 <li className="m-2 flex items-center space-x-1">
                   <ExpressIcon />
                 </li>
-                <li className="m-2 flex items-center space-x-1">
-                  <svg
-                    className="inline w-5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 100 100"
-                    fill="#e10098"
-                  >
-                    <title>GraphQL Logo</title>
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M50 6.90308L87.323 28.4515V71.5484L50 93.0968L12.677 71.5484V28.4515L50 6.90308ZM16.8647 30.8693V62.5251L44.2795 15.0414L16.8647 30.8693ZM50 13.5086L18.3975 68.2457H81.6025L50 13.5086ZM77.4148 72.4334H22.5852L50 88.2613L77.4148 72.4334ZM83.1353 62.5251L55.7205 15.0414L83.1353 30.8693V62.5251Z"
-                    />
-                    <circle cx="50" cy="9.3209" r="8.82" />
-                    <circle cx="85.2292" cy="29.6605" r="8.82" />
-                    <circle cx="85.2292" cy="70.3396" r="8.82" />
-                    <circle cx="50" cy="90.6791" r="8.82" />
-                    <circle cx="14.7659" cy="70.3396" r="8.82" />
-                    <circle cx="14.7659" cy="29.6605" r="8.82" />
-                  </svg>
-                  <span>GraphQL</span>
-                </li>
+
               </ol>
             </div>
             <div>
               <h4 className="text-2xl">Responsibilities</h4>
               <ol className="list-disc pt-2 pl-5">
                 <li>
-                  Designed a website integrated with Contentful CMS in Nuxt.js (Vue.js), enabling
-                  the marketing team to maintain consistent branding while posting promotional
-                  content.
+                  Co-authored the successful grant proposal and technical specifications that secured $250,000 CAD in government
+                  funding for the project prototype.
                 </li>
                 <li>
-                  Engineered a dashboard using Nuxt.js (Vue.js), Express, and PostgreSQL to display
-                  performance metrics based on a database of approximately 200 million rounds.
+                  Led a team of 3 developers, managing the project roadmap on Jira and serving as the primary technical liaison for
+                  the project owner. My leadership on the backend and collaboration with the frontend developer ensured timely
+                  delivery of features.
                 </li>
                 <li>
-                  Provided 150+ node operators with essential support and comprehensive performance
-                  insights:&nbsp;
-                  <a href="https://dashboard.xx.network/">https://dashboard.xx.network/</a>
+                  Architected and developed the Django backend for a data collection platform used in a PhD user study, capturing
+                  subjective assessments from D/HoH viewers on closed captioning quality factors (delay, speed, missing words)
                 </li>
                 <li>
-                  Developed software allowing 300+ end-users to interact with the product, enabling
-                  them to utilize the company&apos;s financial services:&nbsp;
-                  <a href="https://wallet.xx.network/">https://wallet.xx.network/</a>
+                  Wrote a WebRTC application using Vidyo.IO’s API in .NET which sets up a WebRTC video stream.
+                  Software was used in conjunction with a robot allowing a student with autism to stay at home and continue to
+                  participate in class
                 </li>
                 <li>
-                  Created a messenger application using Typescript/React and in-house library XXDK,
-                  expanding access to private messaging and group chats for 500+ users:{' '}
-                  <a href="https://github.com/xxfoundation/elixxir-speakeasy-web/tree/dev">
-                    https://github.com/xxfoundation/elixxir-speakeasy-web/tree/dev
-                  </a>
+                  Prioritized streaming traffic using Quality of Service techniques to ensure minimal latency and high performance
+                  for 1080p 60fps video across varying network conditions.
                 </li>
               </ol>
             </div>
