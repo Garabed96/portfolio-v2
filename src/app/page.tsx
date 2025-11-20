@@ -43,6 +43,8 @@ import tokenSaleScreen2 from './assets/token-sale-screen-2.png';
 import tokenDashboardScreen1 from './assets/token-dashboard-screen-1.png';
 import tokenDashboardScreen2 from './assets/token-dashboard-screen-2.png';
 import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
+import vendorDashboardScreen1 from './assets/vendor-dashboard-screen-1.png';
+import vendorDashboardScreen2 from './assets/vendor-dashboard-screen-2.png';
 
 import { ExternalLink, TrendingUp } from 'lucide-react';
 import { StaticImageData } from 'next/image';
@@ -59,10 +61,10 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: 'token dashboards',
+    name: 'vendor dashboards',
     repo: 'https://github.com/Burtonium/token-dashboard',
-    url: 'https://staging.vip.realworldgaming.io',
-    images: [tokenDashboardScreen1, tokenDashboardScreen2, tokenDashboardScreen3],
+    url: 'https://admin.hamza.market/onboarding',
+    images: [vendorDashboardScreen1, vendorDashboardScreen2, tokenDashboardScreen3],
   },
   {
     name: 'token sale portals',
