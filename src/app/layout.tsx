@@ -11,7 +11,7 @@ const raleway = Raleway({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Garo Nazarian - Full Stack Developer | Web3 & Cloud Expert',
+    default: 'Garo Nazarian - Full Stack Developer | Cloud Expert',
     template: '%s | Garo Nazarian - Full Stack Developer',
   },
   description:
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://portfolio.nephelo.io',
     siteName: 'Garo Nazarian - Full Stack Developer',
-    title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
+    title: 'Garo Nazarian - Full Stack Developer |Cloud Expert',
     description:
       'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
     // images: [
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@garo_nazarian',
     creator: '@garo_nazarian',
-    title: 'Garo Nazarian - Full Stack Developer | Web3 & Cloud Expert',
+    title: 'Garo Nazarian - Full Stack Developer | Cloud Expert',
     description:
       'Full Stack Developer with 6+ years of experience specializing in web3 and cloud applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
     // images: ['/profile.jpg']
