@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mathieubertin.dev/sitemap.xml
+Sitemap: https://portfolio-v2-sigma-umber.vercel.app/
