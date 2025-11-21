@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s | Garo Nazarian - Full Stack Developer',
   },
   description:
-    'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and cloud architecture. Available for consulting and development projects.',
+    'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
   keywords: [
     'Garo Nazarian',
     'Full Stack Developer',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: 'Garo Nazarian - Full Stack Developer',
     title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
+      'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
     // images: [
     //   {
     //     url: '/profile.jpg',
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     creator: '@garo_nazarian',
     title: 'Garo Nazarian - Full Stack Developer | Web3 & Cloud Expert',
     description:
-      'Full Stack Developer with 7+ years of experience specializing in web3 and cloud applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
+      'Full Stack Developer with 6+ years of experience specializing in web3 and cloud applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
     // images: ['/profile.jpg']
   },
   robots: {
@@ -117,7 +117,7 @@ export default function RootLayout({
               name: 'Garo Nazarian',
               jobTitle: 'Full Stack Developer',
               description:
-                'Full Stack Developer with 7+ years of experience specializing in web3 and cloud applications',
+                'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
               url: 'https://portfolio.nephelo.io',
               sameAs: [
                 'https://github.com/Garabed96',
