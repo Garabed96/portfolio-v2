@@ -30,12 +30,11 @@ import {
 import webWalletScreen1 from './assets/web-wallet-screen-1.png';
 import webWalletScreen2 from './assets/web-wallet-screen-2.png';
 import webWalletScreen3 from './assets/web-wallet-screen-3.png';
-import webMessengerScreen1 from './assets/web-messenger-screen-1.png';
-import webMessengerScreen2 from './assets/web-messenger-screen-2.png';
-import webMessengerScreen3 from './assets/web-messenger-screen-3.png';
-import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
 import vendorDashboardScreen1 from './assets/vendor-dashboard-screen-1.png';
 import vendorDashboardScreen2 from './assets/vendor-dashboard-screen-2.png';
+import vendorDashboardScreen3 from './assets/vendor-dashboard-screen-3.png';
+import vendorDashboardScreen4 from './assets/vendor-dashboard-screen-4.png';
+import vendorDashboardScreen5 from './assets/vendor-dashboard-screen-5.png';
 import hamzaWeb3StoreScreen1 from './assets/hamza-web3-store-screen-1.png';
 import hamzaWeb3StoreScreen2 from './assets/hamza-web3-store-screen-2.png';
 import hamzaWeb3StoreScreen3 from './assets/hamza-web3-store-screen-3.png';
@@ -43,7 +42,7 @@ import flexLivingScreen1 from './assets/flex-living-screen-1.png';
 import flexLivingScreen2 from './assets/flex-living-screen-2.png';
 import flexLivingScreen3 from './assets/flex-living-screen-3.png';
 import sumPlusScreen1 from './assets/sum-plus-screen-1.png';
-import sumPlusScreen2 from './assets/sum-plus-screen-1.png';
+import sumPlusScreen2 from './assets/sum-plus-screen-2.png';
 import sumPlusScreen3 from './assets/sum-plus-screen-3.png';
 import sumPlusScreen4 from './assets/sum-plus-screen-4.png';
 
@@ -65,7 +64,7 @@ const projects: Project[] = [
     name: 'web3 multi-vendor dashboards',
     // repo: 'https://github.com/Burtonium/token-dashboard',
     url: 'https://admin.hamza.market/onboarding',
-    images: [vendorDashboardScreen1, vendorDashboardScreen2, tokenDashboardScreen3],
+    images: [vendorDashboardScreen1, vendorDashboardScreen2, vendorDashboardScreen4, vendorDashboardScreen5, vendorDashboardScreen3],
   },
   {
     name: 'web3 ecommerce store',
@@ -351,7 +350,7 @@ export default function Home() {
             onIndexChange={index => {
               dispatch({ type: 'setSelectedImageIndex', index });
             }}
-            className="w-full max-w-5xl"
+            className="w-full max-w-5xl [&_img]:mx-auto [&_img]:max-h-[75vh] [&_img]:w-auto [&_img]:object-contain"
           />
           <div className="absolute right-6 bottom-12 flex gap-2">
             {selectedProject?.repo && (
