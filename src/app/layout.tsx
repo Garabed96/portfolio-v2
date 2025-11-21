@@ -40,14 +40,14 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://portfolio.nephelo.io'),
+  metadataBase: new URL('https://portfolio-v2-sigma-umber.vercel.app/'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://portfolio.nephelo.io',
+    url: 'https://portfolio-v2-sigma-umber.vercel.app/',
     siteName: 'Garo Nazarian - Full Stack Developer',
     title: 'Garo Nazarian - Full Stack Developer |Cloud Expert',
     description:
