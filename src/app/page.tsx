@@ -15,21 +15,14 @@ import {
   PostgreSQLIcon,
   NextjsIcon,
   ReactIcon,
-  NuxtjsIcon,
-  VuejsIcon,
   TailwindcssIcon,
   DatabaseIcon,
-  SmartContractIcon,
   BackendSystemsIcon,
   AwsIcon,
   VercelIcon,
   TanstackQueryIcon,
-  GraphQLIcon as _GraphQLIcon,
   DjangoIcon,
 } from './components/icons';
-import webWalletScreen1 from './assets/web-wallet-screen-1.png';
-import webWalletScreen2 from './assets/web-wallet-screen-2.png';
-import webWalletScreen3 from './assets/web-wallet-screen-3.png';
 import vendorDashboardScreen1 from './assets/vendor-dashboard-screen-1.png';
 import vendorDashboardScreen2 from './assets/vendor-dashboard-screen-2.png';
 import vendorDashboardScreen3 from './assets/vendor-dashboard-screen-3.png';
@@ -50,7 +43,6 @@ import { ExternalLink, TrendingUp } from 'lucide-react';
 import { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import { JsIcon } from './components/icons/JsIcon';
-import { ContentfulLogo } from './components/icons/ContentfulLogo';
 
 type Project = {
   name: string;
