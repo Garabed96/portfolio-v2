@@ -117,8 +117,8 @@ export default function RootLayout({
               name: 'Garo Nazarian',
               jobTitle: 'Full Stack Developer',
               description:
-                'Full Stack Developer with 6+ years of experience specializing in web and blockchain applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
-              url: 'https://portfolio.nephelo.io',
+                'Full Stack Developer with 6+ years of experience specializing in web and cloud applications. Expert in React, Node.js, TypeScript, and Cloud architecture. Available for consulting and development projects.',
+              url: 'https://portfolio-v2-sigma-umber.vercel.app/',
               sameAs: [
                 'https://github.com/Garabed96',
                 'https://www.linkedin.com/in/garo-nazarian/',
