@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     siteName: 'Garo Nazarian - Full Stack Developer',
     title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
     description:
-      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
+      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
     // images: [
     //   {
     //     url: '/profile.jpg',
@@ -64,11 +64,11 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@matt_burton',
-    creator: '@matt_burton',
-    title: 'Garo Nazarian - Full Stack Developer | Web3 & Blockchain Expert',
+    site: '@garo_nazarian',
+    creator: '@garo_nazarian',
+    title: 'Garo Nazarian - Full Stack Developer | Web3 & Cloud Expert',
     description:
-      'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications. Expert in React, Node.js, TypeScript, and blockchain technologies.',
+      'Full Stack Developer with 7+ years of experience specializing in web3 and cloud applications. Expert in React, Node.js, TypeScript, and cloud technologies.',
     // images: ['/profile.jpg']
   },
   robots: {
@@ -117,7 +117,7 @@ export default function RootLayout({
               name: 'Garo Nazarian',
               jobTitle: 'Full Stack Developer',
               description:
-                'Full Stack Developer with 7+ years of experience specializing in web3 and blockchain applications',
+                'Full Stack Developer with 7+ years of experience specializing in web3 and cloud applications',
               url: 'https://portfolio.nephelo.io',
               sameAs: [
                 'https://github.com/Garabed96',
@@ -125,7 +125,7 @@ export default function RootLayout({
               ],
               knowsAbout: [
                 'Web3 Development',
-                'Blockchain Development',
+                'Cloud Development',
                 'React',
                 'TypeScript',
                 'Node.js',

@@ -53,17 +53,18 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: 'web3 multi-vendor dashboards',
-    // repo: 'https://github.com/Burtonium/token-dashboard',
-    url: 'https://admin.hamza.market/onboarding',
-    images: [vendorDashboardScreen1, vendorDashboardScreen2, vendorDashboardScreen4, vendorDashboardScreen5, vendorDashboardScreen3],
-  },
-  {
     name: 'web3 ecommerce store',
     repo: 'https://github.com/LoadPipe/Hamza-medusa',
     images: [hamzaWeb3StoreScreen1, hamzaWeb3StoreScreen2, hamzaWeb3StoreScreen3],
     url: 'https://hamza.market/en',
   },
+  {
+    name: 'web3 multi-vendor dashboards',
+    // repo: 'https://github.com/Burtonium/token-dashboard',
+    url: 'https://admin.hamza.market/onboarding',
+    images: [vendorDashboardScreen1, vendorDashboardScreen2, vendorDashboardScreen4, vendorDashboardScreen5, vendorDashboardScreen3],
+  },
+
   {
     name: 'Flex Living Weekend Project',
     repo: 'https://github.com/Garabed96/FlexLivingDevAssessment',
