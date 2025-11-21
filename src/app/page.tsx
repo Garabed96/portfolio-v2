@@ -27,24 +27,25 @@ import {
   GraphQLIcon as _GraphQLIcon,
   DjangoIcon,
 } from './components/icons';
-import pointsAppScreen1 from './assets/points-app-screen-1.png';
-import pointsAppScreen2 from './assets/points-app-screen-2.png';
 import webWalletScreen1 from './assets/web-wallet-screen-1.png';
 import webWalletScreen2 from './assets/web-wallet-screen-2.png';
 import webWalletScreen3 from './assets/web-wallet-screen-3.png';
-import nodeOperatorDashboardScreen1 from './assets/node-operator-dashboard-screen-1.png';
-import nodeOperatorDashboardScreen2 from './assets/node-operator-dashboard-screen-2.png';
-import nodeOperatorDashboardScreen3 from './assets/node-operator-dashboard-screen-3.png';
 import webMessengerScreen1 from './assets/web-messenger-screen-1.png';
 import webMessengerScreen2 from './assets/web-messenger-screen-2.png';
 import webMessengerScreen3 from './assets/web-messenger-screen-3.png';
-import tokenSaleScreen1 from './assets/token-sale-screen-1.png';
-import tokenSaleScreen2 from './assets/token-sale-screen-2.png';
-import tokenDashboardScreen1 from './assets/token-dashboard-screen-1.png';
-import tokenDashboardScreen2 from './assets/token-dashboard-screen-2.png';
 import tokenDashboardScreen3 from './assets/token-dashboard-screen-3.png';
 import vendorDashboardScreen1 from './assets/vendor-dashboard-screen-1.png';
 import vendorDashboardScreen2 from './assets/vendor-dashboard-screen-2.png';
+import hamzaWeb3StoreScreen1 from './assets/hamza-web3-store-screen-1.png';
+import hamzaWeb3StoreScreen2 from './assets/hamza-web3-store-screen-2.png';
+import hamzaWeb3StoreScreen3 from './assets/hamza-web3-store-screen-3.png';
+import flexLivingScreen1 from './assets/flex-living-screen-1.png';
+import flexLivingScreen2 from './assets/flex-living-screen-2.png';
+import flexLivingScreen3 from './assets/flex-living-screen-3.png';
+import sumPlusScreen1 from './assets/sum-plus-screen-1.png';
+import sumPlusScreen2 from './assets/sum-plus-screen-1.png';
+import sumPlusScreen3 from './assets/sum-plus-screen-3.png';
+import sumPlusScreen4 from './assets/sum-plus-screen-4.png';
 
 import { ExternalLink, TrendingUp } from 'lucide-react';
 import { StaticImageData } from 'next/image';
@@ -61,21 +62,22 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: 'vendor dashboards',
-    repo: 'https://github.com/Burtonium/token-dashboard',
+    name: 'web3 multi-vendor dashboards',
+    // repo: 'https://github.com/Burtonium/token-dashboard',
     url: 'https://admin.hamza.market/onboarding',
     images: [vendorDashboardScreen1, vendorDashboardScreen2, tokenDashboardScreen3],
   },
   {
-    name: 'token sale portals',
-    repo: 'https://github.com/Burtonium/token-sale-portal',
-    images: [tokenSaleScreen1, tokenSaleScreen2],
-    url: 'https://sale.getrealtoken.io/',
+    name: 'web3 ecommerce store',
+    repo: 'https://github.com/LoadPipe/Hamza-medusa',
+    images: [hamzaWeb3StoreScreen1, hamzaWeb3StoreScreen2, hamzaWeb3StoreScreen3],
+    url: 'https://hamza.market/en',
   },
   {
-    name: 'points applications',
-    url: 'https://quest.talisman.xyz/',
-    images: [pointsAppScreen1, pointsAppScreen2],
+    name: 'Flex Living Weekend Project',
+    repo: 'https://github.com/Garabed96/FlexLivingDevAssessment',
+    url: 'https://flex-living-dev-assessment.vercel.app/properties',
+    images: [flexLivingScreen3, flexLivingScreen2, flexLivingScreen1],
   },
   {
     name: 'web wallets',
@@ -84,20 +86,9 @@ const projects: Project[] = [
     images: [webWalletScreen1, webWalletScreen2, webWalletScreen3],
   },
   {
-    name: 'web messengers',
+    name: 'React Native Health App',
     repo: 'https://github.com/xxfoundation/haven',
-    url: 'https://haven.xx.network/',
-    images: [webMessengerScreen1, webMessengerScreen2, webMessengerScreen3],
-  },
-  {
-    name: 'node operator dashboards',
-    repo: 'https://github.com/Burtonium/node-operator-dashboard',
-    url: 'https://dashboard.xx.network/',
-    images: [
-      nodeOperatorDashboardScreen1,
-      nodeOperatorDashboardScreen2,
-      nodeOperatorDashboardScreen3,
-    ],
+    images: [sumPlusScreen1, sumPlusScreen2, sumPlusScreen3, sumPlusScreen4],
   },
 ] as const;
 
