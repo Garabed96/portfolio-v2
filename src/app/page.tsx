@@ -60,7 +60,7 @@ const projects: Project[] = [
   },
   {
     name: 'web3 multi-vendor dashboards',
-    // repo: 'https://github.com/Burtonium/token-dashboard',
+    // repo: '',
     url: 'https://admin.hamza.market/onboarding',
     images: [vendorDashboardScreen1, vendorDashboardScreen2, vendorDashboardScreen4, vendorDashboardScreen5, vendorDashboardScreen3],
   },
