@@ -79,12 +79,6 @@ const projects: Project[] = [
     images: [flexLivingScreen3, flexLivingScreen2, flexLivingScreen1],
   },
   {
-    name: 'web wallets',
-    repo: 'https://github.com/xxfoundation/wallet.xx.network',
-    url: 'https://wallet.xx.network/',
-    images: [webWalletScreen1, webWalletScreen2, webWalletScreen3],
-  },
-  {
     name: 'React Native Health App',
     repo: 'https://github.com/xxfoundation/haven',
     images: [sumPlusScreen1, sumPlusScreen2, sumPlusScreen3, sumPlusScreen4],
