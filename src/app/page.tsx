@@ -184,8 +184,7 @@ export default function Home() {
                   Full-Stack Developer | Cloud Architecture & AWS
                 </h2>
                 <p className="font-title text-lg leading-6 md:text-xl lg:text-2xl">
-                  6+ years of developing scalable systems from the ground up, with absolutely no
-                  interest in UI/UX design.
+                  6+ years of developing scalable systems from the ground up.
                 </p>
               </div>
               <ol className="mt-5 space-y-2 lg:flex lg:space-y-0 lg:space-x-5 lg:text-lg">
